@@ -501,16 +501,18 @@ main {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding-left: 40px;
+    margin-left: 24px;
+    padding-left: 32px;
+    border-left: 2px solid var(--color-gray-light);
 }
 
-/* Vertical timeline line */
+/* Gradient overlay on the timeline border */
 .experience-list::before {
     content: '';
     position: absolute;
-    left: 7px;
-    top: 12px;
-    bottom: 12px;
+    left: -2px;
+    top: 0;
+    bottom: 0;
     width: 2px;
     background: linear-gradient(
         180deg,
@@ -536,7 +538,7 @@ main {
 .experience-card::before {
     content: '';
     position: absolute;
-    left: -40px;
+    left: -41px;
     top: 32px;
     width: 16px;
     height: 16px;
@@ -925,15 +927,12 @@ main {
 
     /* Timeline adjustments for mobile */
     .experience-list {
-        padding-left: 32px;
-    }
-
-    .experience-list::before {
-        left: 5px;
+        margin-left: 16px;
+        padding-left: 24px;
     }
 
     .experience-card::before {
-        left: -32px;
+        left: -33px;
         width: 12px;
         height: 12px;
         top: 28px;
