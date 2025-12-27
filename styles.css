@@ -138,62 +138,112 @@ body {
     z-index: -1;
 }
 
+/* Topographic contour lines */
 .flow-line {
     fill: none;
     stroke: var(--color-gray-mid);
     stroke-width: 1.5;
     stroke-linecap: round;
-    stroke-dasharray: 2000;
-    stroke-dashoffset: 2000;
-    opacity: 0.6;
+    opacity: 0.4;
+    transition: opacity 0.4s ease, stroke-width 0.4s ease;
 }
 
-.line-1 {
-    animation: flowLine 25s linear infinite;
+/* Group animations - each group moves independently */
+.topo-group {
+    transition: transform 0.3s ease-out;
 }
 
-.line-2 {
-    animation: flowLine 28s linear infinite;
-    animation-delay: -4s;
+.topo-group-1 {
+    animation: drift1 20s ease-in-out infinite;
 }
 
-.line-3 {
-    animation: flowLine 22s linear infinite;
-    animation-delay: -8s;
+.topo-group-2 {
+    animation: drift2 25s ease-in-out infinite;
 }
 
-.line-4 {
-    animation: flowLine 26s linear infinite;
-    animation-delay: -12s;
+.topo-group-3 {
+    animation: drift3 22s ease-in-out infinite;
 }
 
-.line-5 {
-    animation: flowLine 24s linear infinite;
-    animation-delay: -3s;
+.topo-group-4 {
+    animation: drift4 28s ease-in-out infinite;
 }
 
-.line-6 {
-    animation: flowLine 27s linear infinite;
-    animation-delay: -7s;
+.topo-group-5 {
+    animation: drift5 24s ease-in-out infinite;
 }
 
-.line-7 {
-    animation: flowLine 23s linear infinite;
-    animation-delay: -11s;
+.topo-group-6 {
+    animation: drift6 26s ease-in-out infinite;
 }
 
-.line-8 {
-    animation: flowLine 29s linear infinite;
-    animation-delay: -15s;
+/* Individual line variations within groups */
+.line-1, .line-4, .line-7, .line-10, .line-13, .line-16 {
+    stroke-width: 1.8;
+    opacity: 0.5;
 }
 
-@keyframes flowLine {
-    0% {
-        stroke-dashoffset: 2000;
-    }
-    100% {
-        stroke-dashoffset: 0;
-    }
+.line-2, .line-5, .line-8, .line-11, .line-14, .line-17 {
+    stroke-width: 1.4;
+    opacity: 0.35;
+}
+
+.line-3, .line-6, .line-9, .line-12, .line-15, .line-18 {
+    stroke-width: 1;
+    opacity: 0.25;
+}
+
+/* Drift animations - subtle organic movement */
+@keyframes drift1 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(15px, 8px); }
+    50% { transform: translate(-10px, 15px); }
+    75% { transform: translate(8px, -5px); }
+}
+
+@keyframes drift2 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-12px, 10px); }
+    50% { transform: translate(18px, -8px); }
+    75% { transform: translate(-5px, 12px); }
+}
+
+@keyframes drift3 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(10px, -12px); }
+    50% { transform: translate(-15px, 5px); }
+    75% { transform: translate(12px, 10px); }
+}
+
+@keyframes drift4 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-8px, 15px); }
+    50% { transform: translate(12px, -10px); }
+    75% { transform: translate(-10px, -8px); }
+}
+
+@keyframes drift5 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(18px, -5px); }
+    50% { transform: translate(-8px, 12px); }
+    75% { transform: translate(5px, -15px); }
+}
+
+@keyframes drift6 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-15px, -10px); }
+    50% { transform: translate(10px, 18px); }
+    75% { transform: translate(-12px, 5px); }
+}
+
+/* Hover interaction styles - applied via JS */
+.background-lines.interactive .topo-group {
+    transition: transform 0.15s ease-out;
+}
+
+.flow-line.highlighted {
+    opacity: 0.7;
+    stroke-width: 2.5;
 }
 
 /* ==========================================================================
@@ -444,99 +494,203 @@ main {
 }
 
 /* ==========================================================================
-   Experience Timeline
+   Experience Section — Timeline Design
    ========================================================================== */
 
-.timeline {
+.experience-list {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    padding-left: 40px;
 }
 
-.timeline-card {
+/* Vertical timeline line */
+.experience-list::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(
+        180deg,
+        var(--color-text) 0%,
+        var(--color-gray-mid) 30%,
+        var(--color-gray-light) 100%
+    );
+    border-radius: 2px;
+}
+
+.experience-card {
     position: relative;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    transition: background var(--transition-fast);
 }
 
-.timeline-header {
+.experience-card:last-child {
+    border-bottom: none;
+}
+
+/* Timeline dot */
+.experience-card::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 32px;
+    width: 16px;
+    height: 16px;
+    background: var(--color-bg);
+    border: 3px solid var(--color-gray-mid);
+    border-radius: 50%;
+    transition: all var(--transition-fast);
+    z-index: 1;
+}
+
+/* Current/active job — filled dot with glow */
+.experience-card:first-child::before {
+    border-color: var(--color-text);
+    background: var(--color-text);
+    box-shadow: 0 0 0 5px rgba(45, 45, 45, 0.12);
+}
+
+/* Hover effect on dots */
+.experience-card:hover::before {
+    border-color: var(--color-text);
+    transform: scale(1.15);
+}
+
+.experience-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
     gap: 16px;
+    align-items: flex-start;
     margin-bottom: 16px;
 }
 
-.company-name {
-    font-size: 0.9rem;
-    font-weight: 500;
+.company-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    box-shadow: var(--shadow-soft);
+}
+
+.company-icon svg {
+    width: 22px;
+    height: 22px;
     color: var(--color-text-muted);
 }
 
-.role-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-top: 2px;
+/* Company icon with image */
+.company-icon-img {
+    padding: 0;
+    overflow: hidden;
 }
 
-.timeline-meta {
-    text-align: right;
+.company-icon-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.company-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.company-name-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.exp-company-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.current-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: var(--color-text);
+    color: var(--color-white);
+    border-radius: 100px;
+}
+
+.exp-job-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin: 0 0 10px;
+}
+
+.exp-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     font-size: 0.85rem;
     color: var(--color-text-subtle);
 }
 
-.timeline-meta .location {
-    display: block;
-}
-
-.timeline-meta .dates {
-    display: block;
-    margin-top: 2px;
-}
-
-.timeline-content p {
-    font-size: 1rem;
-    color: var(--color-text-muted);
-    margin-bottom: 16px;
-}
-
-.achievement-list {
-    margin-top: 20px;
+.exp-location,
+.exp-dates {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    gap: 6px;
 }
 
-.achievement-item {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-}
-
-.achievement-number {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-text);
-    min-width: 90px;
+.exp-location svg,
+.exp-dates svg {
+    opacity: 0.6;
     flex-shrink: 0;
 }
 
-.achievement-text {
-    font-size: 0.9rem;
+.experience-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 68px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.experience-bullets li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 0.95rem;
     color: var(--color-text-muted);
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
-.achievement-item.highlight .achievement-number {
-    background: linear-gradient(135deg, var(--color-text) 0%, #555 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.achievement-item.highlight .achievement-text {
-    color: var(--color-text);
-    font-weight: 500;
+/* Custom bullet points */
+.experience-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    background: var(--color-gray-mid);
+    border-radius: 50%;
 }
 
 /* ==========================================================================
@@ -769,12 +923,42 @@ main {
         border-radius: var(--radius-md);
     }
 
-    .timeline-header {
-        flex-direction: column;
+    /* Timeline adjustments for mobile */
+    .experience-list {
+        padding-left: 32px;
     }
 
-    .timeline-meta {
-        text-align: left;
+    .experience-list::before {
+        left: 5px;
+    }
+
+    .experience-card::before {
+        left: -32px;
+        width: 12px;
+        height: 12px;
+        top: 28px;
+    }
+
+    .experience-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .company-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+    }
+
+    .experience-bullets {
+        margin-left: 0;
+        margin-top: 12px;
+    }
+
+    .exp-meta {
+        flex-direction: column;
+        gap: 6px;
     }
 
     .form-group {
@@ -833,6 +1017,7 @@ main {
 
     .section,
     .glass-card,
+    .experience-card,
     .section-title,
     .footer {
         opacity: 1 !important;
@@ -850,7 +1035,8 @@ main {
         display: none;
     }
 
-    .glass-card {
+    .glass-card,
+    .experience-card {
         background: var(--color-white);
         box-shadow: none;
         border: 1px solid var(--color-gray-light);
@@ -858,6 +1044,7 @@ main {
 
     .section,
     .glass-card,
+    .experience-card,
     .section-title,
     .footer {
         opacity: 1 !important;

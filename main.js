@@ -139,7 +139,7 @@
         // Set initial state - everything hidden and above (negative y = above)
         gsap.set('main .section', { opacity: 0, y: -300, scale: 0.9 });
         gsap.set('main .glass-card', { opacity: 0, y: -150, rotation: 3 });
-        gsap.set('.achievement-item', { opacity: 0, x: -30 });
+        gsap.set('.experience-card', { opacity: 0, y: -150, rotation: 2 });
         gsap.set('footer', { opacity: 0, y: -30 });
     }
 
@@ -148,7 +148,7 @@
 
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) {
-            gsap.set('main .section, main .glass-card, .achievement-item, footer', { opacity: 1, y: 0, x: 0, scale: 1, rotation: 0 });
+            gsap.set('main .section, main .glass-card, .experience-card, footer', { opacity: 1, y: 0, x: 0, scale: 1, rotation: 0 });
             return;
         }
 
@@ -173,14 +173,15 @@
             delay: 0.3,
         });
 
-        // Achievement items slide in
-        gsap.to('.achievement-item', {
+        // Experience cards drop in
+        gsap.to('.experience-card', {
             opacity: 1,
-            x: 0,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: 'power2.out',
-            delay: 0.8,
+            y: 0,
+            rotation: 0,
+            duration: 0.9,
+            stagger: 0.1,
+            ease: 'back.out(1.5)',
+            delay: 0.5,
         });
 
         // Footer drops in
@@ -334,6 +335,98 @@
     }
 
     // ==========================================================================
+    // Topographic Lines Cursor Interaction
+    // ==========================================================================
+
+    function initTopoInteraction() {
+        const svg = document.getElementById('topoLines');
+        if (!svg) return;
+
+        const groups = svg.querySelectorAll('.topo-group');
+        if (!groups.length) return;
+
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let isHovering = false;
+
+        // Influence settings for each group (closer groups react more)
+        const groupSettings = [
+            { strength: 0.04, delay: 0 },
+            { strength: 0.035, delay: 0.02 },
+            { strength: 0.03, delay: 0.04 },
+            { strength: 0.025, delay: 0.06 },
+            { strength: 0.02, delay: 0.08 },
+            { strength: 0.015, delay: 0.1 }
+        ];
+
+        function updateGroupPositions() {
+            if (!isHovering) return;
+
+            const rect = svg.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Calculate offset from center
+            const offsetX = mouseX - centerX;
+            const offsetY = mouseY - centerY;
+
+            groups.forEach((group, index) => {
+                const settings = groupSettings[index] || groupSettings[groupSettings.length - 1];
+
+                // Calculate displacement based on cursor position
+                const translateX = offsetX * settings.strength;
+                const translateY = offsetY * settings.strength;
+
+                // Apply transform with slight delay effect via different strengths
+                group.style.transform = `translate(${translateX}px, ${translateY}px)`;
+            });
+
+            requestAnimationFrame(updateGroupPositions);
+        }
+
+        // Mouse move handler
+        document.addEventListener('mousemove', (e) => {
+            const rect = svg.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top + window.scrollY;
+
+            if (!isHovering) {
+                isHovering = true;
+                svg.classList.add('interactive');
+                updateGroupPositions();
+            }
+        });
+
+        // Mouse leave handler - smoothly return to animation
+        document.addEventListener('mouseleave', () => {
+            isHovering = false;
+            svg.classList.remove('interactive');
+
+            // Reset transforms smoothly
+            groups.forEach((group) => {
+                group.style.transform = '';
+            });
+        });
+
+        // Also reset when mouse is idle for a while
+        let idleTimer;
+        document.addEventListener('mousemove', () => {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+                isHovering = false;
+                svg.classList.remove('interactive');
+                groups.forEach((group) => {
+                    group.style.transform = '';
+                });
+            }, 3000); // Return to auto-animation after 3s idle
+        });
+    }
+
+    // ==========================================================================
     // Initialize
     // ==========================================================================
 
@@ -344,6 +437,7 @@
         initSupabase();
         initSmoothScroll();
         initCVForm();
+        initTopoInteraction();
     }
 
     // Run on DOMContentLoaded
