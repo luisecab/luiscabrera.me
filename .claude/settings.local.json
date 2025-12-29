@@ -6,7 +6,9 @@
       "Bash(git push:*)",
       "WebFetch(domain:luiscabrera.me)",
       "Bash(git fetch:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl:*)",
+      "WebFetch(domain:www.luiscabrera.me)"
     ]
   }
 }
