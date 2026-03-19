@@ -454,6 +454,20 @@ main {
     color: var(--color-text-subtle);
 }
 
+.project-link {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.project-link:hover {
+    opacity: 0.6;
+}
+
 /* ==========================================================================
    Skills Section
    ========================================================================== */
