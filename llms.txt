@@ -1,8 +1,8 @@
 # Luis Cabrera
 
-> Software engineer at P&G in Warsaw. I build mobile apps with Flutter/Dart and agentic systems.
+> From product management to software engineering to agentic engineering. Building products with AI. Product-minded software engineer at P&G, based in Warsaw.
 
-Before software engineering I spent five years in product and operations roles at Mercado Libre, a logistics SaaS company (Foxtrot Systems, Descartes) and P&G, most recently as a product manager on Pampers messaging and CRM. I have an MSc in Big Data & Advanced Analytics from SGH Warsaw School of Economics (2025) and a BS in Industrial Engineering from Instituto Politécnico Nacional (IPN).
+Started in Mexico in operations and product (FREENOW, Mercado Libre, Foxtrot Systems), then product manager at P&G on Pampers' global CRM and messaging ecosystem. Moved into mobile software engineering with Flutter and Dart in 2025. Today: agentic engineering, building and orchestrating teams of AI agents. MSc in Big Data & Advanced Analytics, SGH Warsaw School of Economics.
 
 ## Pages
 
@@ -11,8 +11,8 @@ Before software engineering I spent five years in product and operations roles a
 
 ## Projects
 
-- [Adoptsi](https://adoptsi.si): my company. Adoptsi builds AI agents for traditional businesses.
-- [FotoSeller](https://foto-ready.luisecab93.workers.dev/landing): AI product photography for small and medium marketplace sellers (React, TypeScript, Supabase, Gemini).
+- [Adoptsi](https://adoptsi.si): founded by Luis; brings AI agents and automation to traditional businesses.
+- [FotoReady](https://foto-ready.luisecab93.workers.dev/landing): helps small sellers in Mexico transform a single product photo into marketplace-ready images.
 - traX: personal health tracking and longevity insights (alpha).
 
 ## Profiles

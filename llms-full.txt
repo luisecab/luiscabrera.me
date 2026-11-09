@@ -1,8 +1,8 @@
 # Luis Cabrera
 
-Software engineering and agentic systems.
+From product management to software engineering to agentic engineering. Building products with AI.
 
-Software engineer at P&G. I build mobile apps with Flutter/Dart and agentic systems. Warsaw.
+Global reach, based in Warsaw.
 
 - GitHub: https://github.com/luisecab
 - LinkedIn: https://www.linkedin.com/in/luisecab/
@@ -10,11 +10,15 @@ Software engineer at P&G. I build mobile apps with Flutter/Dart and agentic syst
 
 ## About
 
-I'm a software engineer at P&G in Warsaw, building mobile apps with Flutter and Dart. Before that I spent five years in product and operations roles at Mercado Libre, a logistics SaaS company and P&G, most recently as a product manager on Pampers messaging and CRM.
+I'm a product-minded software engineer at P&G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&G as a product manager, working on Pampers' global CRM and messaging ecosystem.
 
-Most of my building now happens around AI agents. I run a self-hosted agent (Hermes), built FotoReady, an image pipeline for marketplace sellers on React, Supabase, Gemini and Cloudflare Workers, and work on Adoptsi (https://adoptsi.si), which brings AI agents to legacy businesses. Smaller projects include a Garmin data puller and dashboard and a CLI learning coach.
+In 2025, I moved from defining products to building them, transitioning into mobile software engineering with Flutter and Dart. I also completed an MSc in Big Data & Advanced Analytics at SGH Warsaw School of Economics.
 
-I have an MSc in Big Data & Advanced Analytics from SGH (2025). I'm interested in agentic engineering: how to make agents reliable, testable and cheap enough to use every day.
+Today, I'm taking that journey further into agentic engineering. I build and orchestrate teams of AI agents, experiment with self-hosted infrastructure like Hermes, and develop products that turn AI into practical solutions.
+
+I built FotoReady, helping small sellers in Mexico transform a single product photo into marketplace-ready images, and founded Adoptsi (https://adoptsi.si), focused on bringing AI agents and automation to traditional businesses.
+
+What drives me: building AI systems that are reliable, testable, and affordable enough to solve real-world problems every day.
 
 ## Projects
 
@@ -23,7 +27,7 @@ My company. Adoptsi builds AI agents for traditional businesses.
 Tech: AI Agents
 Link: https://adoptsi.si
 
-### FotoSeller (MVP)
+### FotoReady (MVP)
 Solving pain points for small and medium marketplace sellers. AI-powered product photography tool that transforms amateur shots into professional listings.
 Tech: React, TypeScript, Supabase, Gemini AI
 Link: https://foto-ready.luisecab93.workers.dev/landing
