@@ -3,26 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Luis Cabrera, software engineer in Warsaw. I build AI agents, data pipelines and small products with TypeScript, Python, Supabase and Cloudflare Workers.">
+    <meta name="description" content="Luis Cabrera: from product management to software engineering to agentic engineering. Product-minded software engineer at P&amp;G, based in Warsaw. Building products with AI.">
     <meta name="theme-color" content="#f8f7f4">
-    <title>Luis Cabrera — Software engineering &amp; agentic systems</title>
-    <meta property="og:title" content="Luis Cabrera — Software engineering &amp; agentic systems">
-    <meta property="og:description" content="Luis Cabrera, software engineer in Warsaw. I build AI agents, data pipelines and small products with TypeScript, Python, Supabase and Cloudflare Workers.">
+    <title>Luis Cabrera — From product to software to agentic engineering</title>
+    <meta property="og:title" content="Luis Cabrera — From product to software to agentic engineering">
+    <meta property="og:description" content="Luis Cabrera: from product management to software engineering to agentic engineering. Product-minded software engineer at P&amp;G, based in Warsaw. Building products with AI.">
     <meta property="og:url" content="https://www.luiscabrera.me/">
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="Luis Cabrera">
+    <meta property="profile:first_name" content="Luis">
+    <meta property="profile:last_name" content="Cabrera">
     <meta name="twitter:card" content="summary">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20251227">
+    <meta name="twitter:title" content="Luis Cabrera — From product to software to agentic engineering">
+    <meta name="twitter:description" content="Luis Cabrera: from product management to software engineering to agentic engineering. Product-minded software engineer at P&amp;G, based in Warsaw. Building products with AI.">
+    <meta name="author" content="Luis Cabrera">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.luiscabrera.me/">
+    <link rel="alternate" type="text/plain" href="https://www.luiscabrera.me/llms.txt" title="llms.txt">
+    <noscript><style>.hero-name,.hero-tagline,.hero-links{opacity:1!important;transform:none!important}.intro{display:none!important}</style></noscript>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": "https://www.luiscabrera.me/#profile",
+  "url": "https://www.luiscabrera.me/",
+  "name": "Luis Cabrera — From product to software to agentic engineering",
+  "dateModified": "2026-11-09",
+  "inLanguage": "en",
+  "mainEntity": {
+    "@type": "Person",
+    "@id": "https://www.luiscabrera.me/#person",
+    "name": "Luis Cabrera",
+    "url": "https://www.luiscabrera.me/",
+    "jobTitle": "Software Engineer",
+    "description": "Product-minded software engineer at P&G, based in Warsaw, Poland. From product management to software engineering to agentic engineering. Building products with AI.",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Procter & Gamble",
+      "url": "https://www.pg.com/"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Warsaw",
+      "addressCountry": "PL"
+    },
+    "alumniOf": [
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "SGH Warsaw School of Economics",
+        "alternateName": "Warsaw School of Economics"
+      },
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "Instituto Politécnico Nacional",
+        "alternateName": "National Polytechnic Institute"
+      }
+    ],
+    "knowsAbout": [
+      "Flutter",
+      "Dart",
+      "Mobile app development",
+      "Agentic systems",
+      "AI agents",
+      "CRM and lifecycle messaging",
+      "Big data and analytics"
+    ],
+    "sameAs": [
+      "https://github.com/luisecab",
+      "https://www.linkedin.com/in/luisecab/"
+    ]
+  }
+}
+    </script>
+    <link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css?v=20261109b">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
     <!-- Intro Screen -->
-    <div class="intro" id="intro" aria-label="Welcome animation">
+    <div class="intro" id="intro" aria-hidden="true">
         <div class="intro-content">
-            <span class="intro-greeting" id="greeting">Hola</span>
+            <span class="intro-greeting" id="greeting"></span>
         </div>
     </div>
 
@@ -70,8 +133,8 @@
         <!-- Hero Section -->
         <section class="hero" aria-labelledby="hero-title">
             <h1 id="hero-title" class="hero-name">Luis Cabrera</h1>
-            <p class="hero-tagline"><strong>Software engineering and agentic systems</strong></p>
-            <p class="hero-tagline">Software engineer at P&amp;G. I build AI agents and the software around them.</p>
+            <p class="hero-tagline"><strong>From product management to software engineering to agentic engineering. Building products with AI.</strong></p>
+            <p class="hero-tagline">Global reach, based in Warsaw.</p>
             <div class="hero-links">
                 <a href="https://github.com/luisecab" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
                     <svg class="hero-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -91,13 +154,19 @@
             <div class="glass-card fade-in">
                 <h2 id="about-title" class="section-title">About</h2>
                 <p class="about-text">
-                    I'm a software engineer, and I'm learning in the open. By day I work as a software engineer on the Pampers Data Platform at P&amp;G in Warsaw (Messaging &amp; CRM), working on event ingestion, APIs and Braze/Segment integrations. Before that I spent five years in product and operations roles at Mercado Libre, a logistics SaaS company and P&amp;G.
+                    I'm a product-minded software engineer at P&amp;G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&amp;G as a product manager, working on Pampers' global CRM and messaging ecosystem.
                 </p>
                 <p class="about-text">
-                    Most of my building now happens around AI agents. I run a self-hosted agent (Hermes), built FotoReady, an image pipeline for marketplace sellers on React, Supabase, Gemini and Cloudflare Workers, and work on Adoptsi, which brings AI agents to legacy businesses. Smaller projects include a Garmin data puller and dashboard and a CLI learning coach.
+                    In 2025, I moved from defining products to building them, transitioning into mobile software engineering with Flutter and Dart. I also completed an MSc in Big Data &amp; Advanced Analytics at SGH Warsaw School of Economics.
                 </p>
                 <p class="about-text">
-                    I have an MSc in Big Data &amp; Advanced Analytics from SGH (2025). I'm interested in agentic engineering: how to make agents reliable, testable and cheap enough to use every day.
+                    Today, I'm taking that journey further into agentic engineering. I build and orchestrate teams of AI agents, experiment with self-hosted infrastructure like Hermes, and develop products that turn AI into practical solutions.
+                </p>
+                <p class="about-text">
+                    I built FotoReady, helping small sellers in Mexico transform a single product photo into marketplace-ready images, and founded <a href="https://adoptsi.si" target="_blank" rel="noopener noreferrer" class="inline-link">Adoptsi</a>, focused on bringing AI agents and automation to traditional businesses.
+                </p>
+                <p class="about-text">
+                    What drives me: building AI systems that are reliable, testable, and affordable enough to solve real-world problems every day.
                 </p>
             </div>
         </section>
@@ -108,7 +177,20 @@
             <div class="projects-grid">
                 <article class="glass-card project-card fade-in">
                     <div class="project-header">
-                        <h3 class="project-name">FotoSeller</h3>
+                        <h3 class="project-name">Adoptsi</h3>
+                        <span class="project-status">Building</span>
+                    </div>
+                    <p class="project-desc">
+                        My company. Adoptsi builds AI agents for traditional businesses.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-pill">AI Agents</span>
+                    </div>
+                    <a href="https://adoptsi.si" target="_blank" rel="noopener noreferrer" class="project-link">Visit adoptsi.si →</a>
+                </article>
+                <article class="glass-card project-card fade-in">
+                    <div class="project-header">
+                        <h3 class="project-name">FotoReady</h3>
                         <span class="project-status">MVP</span>
                     </div>
                     <p class="project-desc">
@@ -139,22 +221,32 @@
             </div>
         </section>
 
+        <!-- GitHub Activity Section -->
+        <section class="section" aria-labelledby="github-title">
+            <h2 id="github-title" class="section-title fade-in">GitHub activity</h2>
+            <div class="glass-card github-card fade-in">
+                <a href="https://github.com/luisecab" target="_blank" rel="noopener noreferrer" class="github-chart-link">
+                    <img src="https://ghchart.rshah.org/2d2d2d/luisecab" alt="Contribution graph for GitHub user luisecab over the last year" class="github-chart" width="663" height="104" loading="lazy" decoding="async">
+                </a>
+                <p class="github-caption">Contributions over the last year · <a href="https://github.com/luisecab" target="_blank" rel="noopener noreferrer" class="inline-link">github.com/luisecab</a></p>
+            </div>
+        </section>
+
         <!-- Experience Section -->
         <section class="section" aria-labelledby="experience-title">
             <h2 id="experience-title" class="section-title">Experience</h2>
             <div class="experience-list">
-                <!-- Procter & Gamble -->
+                <!-- Procter & Gamble: one header, two roles -->
                 <article class="experience-card">
                     <div class="experience-header">
                         <div class="company-icon company-icon-img">
-                            <img src="PG_PHASE_LOGO_RGB_HR.jpg" alt="P&G Logo" />
+                            <img src="PG_PHASE_LOGO_RGB_HR.jpg" alt="P&amp;G logo" />
                         </div>
                         <div class="company-info">
                             <div class="company-name-row">
-                                <h3 class="exp-company-name">Procter & Gamble</h3>
+                                <h3 class="exp-company-name">Procter &amp; Gamble</h3>
                                 <span class="current-badge">Current</span>
                             </div>
-                            <p class="exp-job-title">Software Engineer, Messaging & CRM – Pampers Data Platform</p>
                             <div class="exp-meta">
                                 <span class="exp-location">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
@@ -162,83 +254,52 @@
                                 </span>
                                 <span class="exp-dates">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                    2025 - Present
+                                    2023 - Present
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <ul class="experience-bullets">
-                        <li>Defined the multi-year global CRM Product Vision for Pampers and converted it into a technical roadmap for Braze/Segment integration to improve lifecycle orchestration and CLTV outcomes.</li>
-                        <li>Owned the yearly messaging vision budget for Pampers, aligning investment decisions with roadmap priorities, delivery capacity, and expected ROI.</li>
-                        <li>Led the proof of concept for API campaign automation, laying the foundations for an agentic-agency operating model and faster campaign execution.</li>
-                        <li>Engineered scalable event ingestion and API architecture, reducing API load by 1,200 bps and improving platform reliability for millions of global users.</li>
-                        <li>Established global standards for data governance, retention logic, and campaign measurement, improving campaign creation speed by 1,000 bps.</li>
-                    </ul>
-                </article>
-
-                <article class="experience-card">
-                    <div class="experience-header">
-                        <div class="company-icon company-icon-img">
-                            <img src="PG_PHASE_LOGO_RGB_HR.jpg" alt="P&G Logo" />
-                        </div>
-                        <div class="company-info">
-                            <div class="company-name-row">
-                                <h3 class="exp-company-name">Procter & Gamble</h3>
+                    <ol class="role-timeline">
+                        <li class="role role-current">
+                            <div class="role-head">
+                                <h4 class="role-title">Software Engineer – Mobile (Flutter/Dart)</h4>
+                                <span class="role-dates">2025 - Present</span>
                             </div>
-                            <p class="exp-job-title">IT Product Manager – Media Optimization</p>
-                            <div class="exp-meta">
-                                <span class="exp-location">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                    Warsaw, Poland
-                                </span>
-                                <span class="exp-dates">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                    2024 - 2025
-                                </span>
+                            <ul class="experience-bullets">
+                                <li>Build and maintain mobile app features with Flutter and Dart.</li>
+                                <li>Write and review code, tests and technical designs with the engineering team.</li>
+                                <li>Integrate the app with backend APIs and work on reliability and performance.</li>
+                            </ul>
+                        </li>
+                        <li class="role">
+                            <div class="role-head">
+                                <h4 class="role-title">Product Manager</h4>
+                                <span class="role-dates">2023 - 2025</span>
                             </div>
-                        </div>
-                    </div>
-                    <ul class="experience-bullets">
-                        <li>Led predictive scoring initiatives and real-time Power BI/GCP dashboards that improved media investment decisions and increased incremental ROAS by 10% on the annual media spend budget.</li>
-                        <li>Unified cross-region analytics workflows into one reporting model, improving metric transparency and prioritization speed.</li>
-                        <li>Orchestrated multi-market requirements for an MVP campaign-management in-housing transformation.</li>
-                    </ul>
-                </article>
-
-                <article class="experience-card">
-                    <div class="experience-header">
-                        <div class="company-icon company-icon-img">
-                            <img src="PG_PHASE_LOGO_RGB_HR.jpg" alt="P&G Logo" />
-                        </div>
-                        <div class="company-info">
-                            <div class="company-name-row">
-                                <h3 class="exp-company-name">Procter & Gamble</h3>
-                            </div>
-                            <p class="exp-job-title">Initiative Operations Project Leader – Braun (Global)</p>
-                            <div class="exp-meta">
-                                <span class="exp-location">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                    Warsaw, Poland
-                                </span>
-                                <span class="exp-dates">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                    2022 - 2024
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="experience-bullets">
-                        <li>Directed global go-to-market planning for two product lines across three continents.</li>
-                        <li>Coordinated 20+ stakeholders across Engineering, Supply Chain, and SNO to finalize feasibility and launch requirements.</li>
-                        <li>Recognized with P&G CEO Award (Top 2%) and “Best Manager” for operational execution and cross-functional leadership.</li>
-                    </ul>
+                            <ul class="experience-bullets">
+                                <li>Defined the multi-year global CRM Product Vision for Pampers and converted it into a technical roadmap for Braze/Segment integration to improve lifecycle orchestration and CLTV outcomes.</li>
+                                <li>Owned the yearly messaging vision budget for Pampers, aligning investment decisions with roadmap priorities, delivery capacity, and expected ROI.</li>
+                                <li>Led the proof of concept for API campaign automation, laying the foundations for an agentic-agency operating model and faster campaign execution.</li>
+                                <li>Engineered scalable event ingestion and API architecture, reducing API load by 1,200 bps and improving platform reliability for millions of global users.</li>
+                            </ul>
+                            <details class="more-bullets">
+                                <summary><span class="more-label">4 more</span><span class="less-label">Show less</span></summary>
+                                <ul class="experience-bullets">
+                                    <li>Established global standards for data governance, retention logic, and campaign measurement, improving campaign creation speed by 1,000 bps.</li>
+                                    <li>Media Optimization: led predictive scoring initiatives and real-time Power BI/GCP dashboards that improved media investment decisions and increased incremental ROAS by 10% on the annual media spend budget.</li>
+                                    <li>Unified cross-region analytics workflows into one reporting model, improving metric transparency and prioritization speed.</li>
+                                    <li>Orchestrated multi-market requirements for an MVP campaign-management in-housing transformation.</li>
+                                </ul>
+                            </details>
+                        </li>
+                    </ol>
                 </article>
 
                 <!-- Foxtrot Systems -->
                 <article class="experience-card">
                     <div class="experience-header">
-                        <div class="company-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <div class="company-icon company-icon-img company-icon-logo">
+                            <img src="logo-descartes.png" alt="Descartes logo" />
                         </div>
                         <div class="company-info">
                             <div class="company-name-row">
@@ -266,8 +327,8 @@
                 <!-- Mercado Libre -->
                 <article class="experience-card">
                     <div class="experience-header">
-                        <div class="company-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <div class="company-icon company-icon-img company-icon-logo">
+                            <img src="logo-mercadolibre.png" alt="Mercado Libre logo" />
                         </div>
                         <div class="company-info">
                             <div class="company-name-row">
@@ -296,8 +357,8 @@
                 <!-- FREENOW -->
                 <article class="experience-card">
                     <div class="experience-header">
-                        <div class="company-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <div class="company-icon company-icon-img company-icon-logo">
+                            <img src="logo-freenow.svg" alt="FREENOW logo" />
                         </div>
                         <div class="company-info">
                             <div class="company-name-row">
@@ -325,12 +386,34 @@
             </div>
         </section>
 
+        <!-- Hackathons Section -->
+        <!-- To add a hackathon: copy one <article class="hackathon-card"> block (newest first). -->
+        <section class="section" aria-labelledby="hackathons-title">
+            <h2 id="hackathons-title" class="section-title fade-in">Hackathons</h2>
+            <div class="hackathon-list">
+                <article class="glass-card hackathon-card fade-in">
+                    <div class="hackathon-header">
+                        <h3 class="hackathon-name"><a href="https://www.hackjunction.com/" target="_blank" rel="noopener noreferrer">Junction 2025</a></h3>
+                        <span class="hackathon-date">14–16 Nov 2025</span>
+                    </div>
+                    <p class="hackathon-place">Hype Arena, Espoo, Finland · Theme: Utopia &amp; Dystopia</p>
+                    <p class="hackathon-role">Participant</p>
+                    <!-- TODO: project/result -->
+                </article>
+            </div>
+        </section>
+
         <!-- Education Section -->
         <section class="section" aria-labelledby="education-title">
             <h2 id="education-title" class="section-title fade-in">Education</h2>
             <div class="education-grid">
                 <article class="glass-card education-card fade-in">
-                    <h3 class="school-name">Warsaw School of Economics</h3>
+                    <div class="edu-header">
+                        <div class="company-icon company-icon-img company-icon-logo">
+                            <img src="logo-sgh.svg" alt="SGH Warsaw School of Economics logo" />
+                        </div>
+                        <h3 class="school-name">Warsaw School of Economics</h3>
+                    </div>
                     <p class="degree">MSc Big Data, Advanced Analytics</p>
                     <div class="edu-meta">
                         <span>2023 — 2025</span>
@@ -338,7 +421,12 @@
                     </div>
                 </article>
                 <article class="glass-card education-card fade-in">
-                    <h3 class="school-name">National Polytechnic Institute</h3>
+                    <div class="edu-header">
+                        <div class="company-icon company-icon-img company-icon-logo">
+                            <img src="logo-ipn.svg" alt="Instituto Politécnico Nacional logo" />
+                        </div>
+                        <h3 class="school-name">National Polytechnic Institute</h3>
+                    </div>
                     <p class="degree">BS Industrial Engineering</p>
                     <div class="edu-meta">
                         <span>2013 — 2018</span>
@@ -384,12 +472,15 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
+            <p class="footer-links"><a href="https://adoptsi.si" target="_blank" rel="noopener noreferrer">Building Adoptsi →</a></p>
+            <p class="footer-privacy">Privacy: page views are counted anonymously with Vercel Web Analytics, without cookies. No ads, no tracking. If you request the CV, the email you enter is used to send it to you.</p>
             <p class="footer-copy">&copy; 2026 Luis Cabrera. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="main.js"></script>
-    <!-- 100% privacy-first analytics -->
-    <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+    <!-- Vercel Web Analytics: cookie-free, anonymous page views -->
+    <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

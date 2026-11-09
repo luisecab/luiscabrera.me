@@ -1,0 +1,93 @@
+# Luis Cabrera
+
+From product management to software engineering to agentic engineering. Building products with AI.
+
+Global reach, based in Warsaw.
+
+- GitHub: https://github.com/luisecab
+- LinkedIn: https://www.linkedin.com/in/luisecab/
+- Website: https://www.luiscabrera.me/
+
+## About
+
+I'm a product-minded software engineer at P&G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&G as a product manager, working on Pampers' global CRM and messaging ecosystem.
+
+In 2025, I moved from defining products to building them, transitioning into mobile software engineering with Flutter and Dart. I also completed an MSc in Big Data & Advanced Analytics at SGH Warsaw School of Economics.
+
+Today, I'm taking that journey further into agentic engineering. I build and orchestrate teams of AI agents, experiment with self-hosted infrastructure like Hermes, and develop products that turn AI into practical solutions.
+
+I built FotoReady, helping small sellers in Mexico transform a single product photo into marketplace-ready images, and founded Adoptsi (https://adoptsi.si), focused on bringing AI agents and automation to traditional businesses.
+
+What drives me: building AI systems that are reliable, testable, and affordable enough to solve real-world problems every day.
+
+## Projects
+
+### Adoptsi (Building)
+My company. Adoptsi builds AI agents for traditional businesses.
+Tech: AI Agents
+Link: https://adoptsi.si
+
+### FotoReady (MVP)
+Solving pain points for small and medium marketplace sellers. AI-powered product photography tool that transforms amateur shots into professional listings.
+Tech: React, TypeScript, Supabase, Gemini AI
+Link: https://foto-ready.luisecab93.workers.dev/landing
+
+### traX (Alpha)
+Personal health tracking and longevity insights. Aggregating biometrics, habits, and interventions to optimize for healthspan.
+Tech: Health Data, Analytics, Longevity
+
+## GitHub activity
+
+Contribution graph: https://github.com/luisecab
+
+## Experience
+
+### Procter & Gamble — Warsaw, Poland (2023 - Present)
+
+**Software Engineer – Mobile (Flutter/Dart)**, 2025 - Present
+- Build and maintain mobile app features with Flutter and Dart.
+- Write and review code, tests and technical designs with the engineering team.
+- Integrate the app with backend APIs and work on reliability and performance.
+
+**Product Manager**, 2023 - 2025
+- Defined the multi-year global CRM Product Vision for Pampers and converted it into a technical roadmap for Braze/Segment integration to improve lifecycle orchestration and CLTV outcomes.
+- Owned the yearly messaging vision budget for Pampers, aligning investment decisions with roadmap priorities, delivery capacity, and expected ROI.
+- Led the proof of concept for API campaign automation, laying the foundations for an agentic-agency operating model and faster campaign execution.
+- Engineered scalable event ingestion and API architecture, reducing API load by 1,200 bps and improving platform reliability for millions of global users.
+- Established global standards for data governance, retention logic, and campaign measurement, improving campaign creation speed by 1,000 bps.
+- Media Optimization: led predictive scoring initiatives and real-time Power BI/GCP dashboards that improved media investment decisions and increased incremental ROAS by 10% on the annual media spend budget.
+- Unified cross-region analytics workflows into one reporting model, improving metric transparency and prioritization speed.
+- Orchestrated multi-market requirements for an MVP campaign-management in-housing transformation.
+
+### Foxtrot Systems (Descartes) — CDMX, Mexico (May 2021 - Jan 2022)
+**Account Product Manager**
+- Rolled out AI-driven logistics SaaS in 12 countries
+- Built Tableau KPIs portal that lifted adoption from 69% to 80%
+
+### Mercado Libre — CDMX, Mexico (Apr 2020 - May 2021)
+**Product - Shipping**
+- Headed quality analytics, training, process audits & control-tower team
+- Expansion and scaling of shipping operations
+- +0.40pp in delivery success rate
+
+### FREENOW (Beat) — CDMX, Mexico (May 2019 - Apr 2020)
+**Operations Specialist / Project Specialist**
+- Managed rental fleet operations
+- Liability insurance roll-out
+- Driver lifecycle management
+
+## Hackathons
+
+### Junction 2025 (14–16 Nov 2025)
+Hype Arena, Espoo, Finland · Theme: Utopia & Dystopia
+Role: Participant
+Link: https://www.hackjunction.com/
+
+## Education
+
+- Warsaw School of Economics (SGH) — MSc Big Data, Advanced Analytics, 2023 — 2025, GPA 4.0
+- National Polytechnic Institute (Instituto Politécnico Nacional, IPN) — BS Industrial Engineering, 2013 — 2018, GPA 4.4
+
+## Privacy
+
+Page views are counted anonymously with Vercel Web Analytics, without cookies. No ads, no tracking. If you request the CV, the email you enter is used to send it to you.

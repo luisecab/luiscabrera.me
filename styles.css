@@ -1,3 +1,22 @@
+/* Inter (variable, 300–700), self-hosted from Google Fonts files. SIL Open Font License 1.1 */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('fonts/inter-latin-var.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('fonts/inter-latin-ext-var.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 /* ==========================================================================
    Luis Cabrera Portfolio — Styles
    ========================================================================== */
@@ -78,7 +97,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 1.2s ease-out;
+    transition: opacity 0.5s ease-out;
 }
 
 .intro.hide {
@@ -103,11 +122,11 @@ body {
     color: var(--color-text);
     opacity: 0;
     transform: translateY(100%);
-    animation: greetingIn 0.5s ease forwards;
+    animation: greetingIn 0.25s ease forwards;
 }
 
 .intro-greeting.out {
-    animation: greetingOut 0.4s ease forwards;
+    animation: greetingOut 0.18s ease forwards;
 }
 
 @keyframes greetingIn {
@@ -386,6 +405,10 @@ main {
     color: var(--color-text);
 }
 
+.about-text + .about-text {
+    margin-top: 14px;
+}
+
 .about-text strong {
     font-weight: 600;
 }
@@ -396,13 +419,33 @@ main {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 20px;
 }
 
 .project-card {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    padding: 28px;
+}
+
+.project-card .project-link {
+    margin-top: auto;
+    padding-top: 16px;
+}
+
+@media (max-width: 860px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .project-header {
@@ -1063,4 +1106,236 @@ main {
         opacity: 1 !important;
         transform: none !important;
     }
+}
+
+/* ==========================================================================
+   Logos (wordmarks / crests on a light tile)
+   ========================================================================== */
+
+.company-icon-logo {
+    background: #fff;
+    padding: 7px;
+}
+
+.company-icon-logo img {
+    object-fit: contain;
+}
+
+.edu-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 8px;
+}
+
+.edu-header .school-name {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Hackathons Section
+   ========================================================================== */
+
+.hackathon-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.hackathon-card {
+    padding: 28px;
+}
+
+.hackathon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.hackathon-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.hackathon-name a,
+.inline-link,
+.footer-links a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-glass-border);
+    transition: opacity 0.2s ease;
+}
+
+.hackathon-name a:hover,
+.inline-link:hover,
+.footer-links a:hover {
+    opacity: 0.6;
+}
+
+.hackathon-date {
+    font-size: 0.85rem;
+    color: var(--color-text-subtle);
+}
+
+.hackathon-place {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+}
+
+.hackathon-role {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.footer-links {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   P&G role timeline (one company header, several roles)
+   ========================================================================== */
+
+.role-timeline {
+    list-style: none;
+    margin: 0 0 0 68px;
+    padding: 0 0 0 20px;
+    border-left: 1px dashed var(--color-gray-mid);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.role {
+    position: relative;
+}
+
+.role::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 2px solid var(--color-gray-mid);
+}
+
+.role-current::before {
+    background: var(--color-text);
+    border-color: var(--color-text);
+}
+
+.role-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 12px;
+    margin-bottom: 10px;
+}
+
+.role-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.role-dates {
+    font-size: 0.85rem;
+    color: var(--color-text-subtle);
+}
+
+.role .experience-bullets {
+    margin-left: 0;
+}
+
+.more-bullets {
+    margin-top: 8px;
+}
+
+.more-bullets > .experience-bullets {
+    margin-top: 8px;
+}
+
+.more-bullets summary {
+    display: inline-block;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-glass-border);
+    transition: opacity 0.2s ease;
+}
+
+.more-bullets summary::-webkit-details-marker {
+    display: none;
+}
+
+.more-bullets summary:hover {
+    opacity: 0.6;
+}
+
+.more-bullets .less-label,
+.more-bullets[open] .more-label {
+    display: none;
+}
+
+.more-bullets[open] .less-label {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    .role-timeline {
+        margin-left: 0;
+        margin-top: 12px;
+    }
+}
+
+/* ==========================================================================
+   GitHub activity
+   ========================================================================== */
+
+.github-card {
+    padding: 24px;
+}
+
+.github-chart-link {
+    display: block;
+    overflow-x: auto;
+}
+
+.github-chart {
+    display: block;
+    width: 100%;
+    min-width: 480px;
+    height: auto;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+}
+
+.github-chart-link:hover .github-chart {
+    opacity: 1;
+}
+
+.github-caption {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--color-text-subtle);
+}
+
+.footer-privacy {
+    font-size: 0.8rem;
+    color: var(--color-text-subtle);
+    max-width: 520px;
+    margin: 0 auto 8px;
 }
