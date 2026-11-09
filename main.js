@@ -10,7 +10,8 @@
     // ==========================================================================
 
     const greetings = ['Hola', 'Hello', 'Cześć', 'Salut', 'Ciao'];
-    let greetingIndex = 0;
+    const GREETING_MS = 320;   // time each greeting stays on screen
+    const SWAP_MS = 180;       // fade between greetings
 
     function runIntroAnimation() {
         const intro = document.getElementById('intro');
@@ -19,59 +20,67 @@
 
         if (!intro || !greetingEl) return;
 
-        // Check if user has seen intro recently (session storage)
-        if (sessionStorage.getItem('introSeen')) {
-            intro.classList.add('done');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let finished = false;
+        const timers = [];
+        const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+        function finish(immediate) {
+            if (finished) return;
+            finished = true;
+            timers.forEach(clearTimeout);
+            removeSkipListeners();
+            try { sessionStorage.setItem('introSeen', 'true'); } catch (e) { /* storage blocked */ }
             if (hero) hero.classList.add('revealed');
-            setTimeout(revealContent, 400);
+            if (immediate) {
+                intro.classList.add('done');
+                revealContent();
+                return;
+            }
+            intro.classList.add('hide');
+            setTimeout(revealContent, 200);
+            setTimeout(() => intro.classList.add('done'), 700);
+        }
+
+        const skip = () => finish(false);
+        const skipEvents = ['pointerdown', 'touchstart', 'wheel', 'scroll', 'keydown'];
+        function removeSkipListeners() {
+            skipEvents.forEach(ev => window.removeEventListener(ev, skip));
+        }
+
+        // Skip entirely: reduced motion, or already seen this session
+        let seen = false;
+        try { seen = !!sessionStorage.getItem('introSeen'); } catch (e) { /* storage blocked */ }
+        if (prefersReducedMotion || seen) {
+            finish(true);
             return;
         }
 
-        function showNextGreeting() {
-            greetingIndex++;
+        greetingEl.textContent = greetings[0];
 
-            if (greetingIndex >= greetings.length) {
-                // Fade out last greeting first
-                setTimeout(() => {
-                    greetingEl.classList.add('out');
+        // Tap, click, scroll or any key skips the intro
+        skipEvents.forEach(ev => window.addEventListener(ev, skip, { passive: true }));
 
-                    // Start revealing hero while greeting fades
-                    setTimeout(() => {
-                        if (hero) hero.classList.add('revealed');
-                        // Start content reveal after hero starts appearing
-                        setTimeout(revealContent, 600);
-                    }, 200);
-
-                    // Then fade out the intro overlay
-                    setTimeout(() => {
-                        intro.classList.add('hide');
-                        sessionStorage.setItem('introSeen', 'true');
-                        setTimeout(() => {
-                            intro.classList.add('done');
-                        }, 1400);
-                    }, 400);
-                }, 700);
+        let index = 0;
+        function next() {
+            index++;
+            if (index >= greetings.length) {
+                greetingEl.classList.add('out');
+                later(() => finish(false), SWAP_MS);
                 return;
             }
-
-            // Animate out current greeting
             greetingEl.classList.add('out');
-
-            setTimeout(() => {
-                // Switch text and animate in
-                greetingEl.textContent = greetings[greetingIndex];
+            later(() => {
+                greetingEl.textContent = greetings[index];
                 greetingEl.classList.remove('out');
                 greetingEl.style.animation = 'none';
-                greetingEl.offsetHeight; // Trigger reflow
+                greetingEl.offsetHeight; // restart the CSS animation
                 greetingEl.style.animation = '';
-
-                // Schedule next greeting
-                setTimeout(showNextGreeting, 600);
-            }, 400);
+                later(next, GREETING_MS);
+            }, SWAP_MS);
         }
 
-        // Start cycling after first greeting displays
-        setTimeout(showNextGreeting, 700);
+        later(next, GREETING_MS);
     }
 
     // ==========================================================================

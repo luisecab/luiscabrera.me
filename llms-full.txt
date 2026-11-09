@@ -1,0 +1,89 @@
+# Luis Cabrera
+
+Software engineering and agentic systems.
+
+Software engineer at P&G. I build mobile apps with Flutter/Dart and agentic systems. Warsaw.
+
+- GitHub: https://github.com/luisecab
+- LinkedIn: https://www.linkedin.com/in/luisecab/
+- Website: https://www.luiscabrera.me/
+
+## About
+
+I'm a software engineer at P&G in Warsaw, building mobile apps with Flutter and Dart. Before that I spent five years in product and operations roles at Mercado Libre, a logistics SaaS company and P&G, most recently as a product manager on Pampers messaging and CRM.
+
+Most of my building now happens around AI agents. I run a self-hosted agent (Hermes), built FotoReady, an image pipeline for marketplace sellers on React, Supabase, Gemini and Cloudflare Workers, and work on Adoptsi (https://adoptsi.si), which brings AI agents to legacy businesses. Smaller projects include a Garmin data puller and dashboard and a CLI learning coach.
+
+I have an MSc in Big Data & Advanced Analytics from SGH (2025). I'm interested in agentic engineering: how to make agents reliable, testable and cheap enough to use every day.
+
+## Projects
+
+### Adoptsi (Building)
+My company. Adoptsi builds AI agents for traditional businesses.
+Tech: AI Agents
+Link: https://adoptsi.si
+
+### FotoSeller (MVP)
+Solving pain points for small and medium marketplace sellers. AI-powered product photography tool that transforms amateur shots into professional listings.
+Tech: React, TypeScript, Supabase, Gemini AI
+Link: https://foto-ready.luisecab93.workers.dev/landing
+
+### traX (Alpha)
+Personal health tracking and longevity insights. Aggregating biometrics, habits, and interventions to optimize for healthspan.
+Tech: Health Data, Analytics, Longevity
+
+## GitHub activity
+
+Contribution graph: https://github.com/luisecab
+
+## Experience
+
+### Procter & Gamble — Warsaw, Poland (2023 - Present)
+
+**Software Engineer – Mobile (Flutter/Dart)**, 2025 - Present
+- Build and maintain mobile app features with Flutter and Dart.
+- Write and review code, tests and technical designs with the engineering team.
+- Integrate the app with backend APIs and work on reliability and performance.
+
+**Product Manager**, 2023 - 2025
+- Defined the multi-year global CRM Product Vision for Pampers and converted it into a technical roadmap for Braze/Segment integration to improve lifecycle orchestration and CLTV outcomes.
+- Owned the yearly messaging vision budget for Pampers, aligning investment decisions with roadmap priorities, delivery capacity, and expected ROI.
+- Led the proof of concept for API campaign automation, laying the foundations for an agentic-agency operating model and faster campaign execution.
+- Engineered scalable event ingestion and API architecture, reducing API load by 1,200 bps and improving platform reliability for millions of global users.
+- Established global standards for data governance, retention logic, and campaign measurement, improving campaign creation speed by 1,000 bps.
+- Media Optimization: led predictive scoring initiatives and real-time Power BI/GCP dashboards that improved media investment decisions and increased incremental ROAS by 10% on the annual media spend budget.
+- Unified cross-region analytics workflows into one reporting model, improving metric transparency and prioritization speed.
+- Orchestrated multi-market requirements for an MVP campaign-management in-housing transformation.
+
+### Foxtrot Systems (Descartes) — CDMX, Mexico (May 2021 - Jan 2022)
+**Account Product Manager**
+- Rolled out AI-driven logistics SaaS in 12 countries
+- Built Tableau KPIs portal that lifted adoption from 69% to 80%
+
+### Mercado Libre — CDMX, Mexico (Apr 2020 - May 2021)
+**Product - Shipping**
+- Headed quality analytics, training, process audits & control-tower team
+- Expansion and scaling of shipping operations
+- +0.40pp in delivery success rate
+
+### FREENOW (Beat) — CDMX, Mexico (May 2019 - Apr 2020)
+**Operations Specialist / Project Specialist**
+- Managed rental fleet operations
+- Liability insurance roll-out
+- Driver lifecycle management
+
+## Hackathons
+
+### Junction 2025 (14–16 Nov 2025)
+Hype Arena, Espoo, Finland · Theme: Utopia & Dystopia
+Role: Participant
+Link: https://www.hackjunction.com/
+
+## Education
+
+- Warsaw School of Economics (SGH) — MSc Big Data, Advanced Analytics, 2023 — 2025, GPA 4.0
+- National Polytechnic Institute (Instituto Politécnico Nacional, IPN) — BS Industrial Engineering, 2013 — 2018, GPA 4.4
+
+## Privacy
+
+Page views are counted anonymously with Vercel Web Analytics, without cookies. No ads, no tracking. If you request the CV, the email you enter is used to send it to you.
