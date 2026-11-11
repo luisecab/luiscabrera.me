@@ -32,7 +32,7 @@ Solving pain points for small and medium marketplace sellers. AI-powered product
 Tech: React, TypeScript, Supabase, Gemini AI
 Link: https://foto-ready.luisecab93.workers.dev/landing
 
-### traX (Alpha)
+### traX (Sunset)
 Personal health tracking and longevity insights. Aggregating biometrics, habits, and interventions to optimize for healthspan.
 Tech: Health Data, Analytics, Longevity
 

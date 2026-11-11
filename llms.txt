@@ -13,7 +13,7 @@ Started in Mexico in operations and product (FREENOW, Mercado Libre, Foxtrot Sys
 
 - [AdoptSI](https://adoptsi.si): builds AI agents for traditional businesses, plus websites and MCP servers that help SMBs integrate with AI.
 - [FotoReady](https://foto-ready.luisecab93.workers.dev/landing): helps small sellers in Mexico transform a single product photo into marketplace-ready images.
-- traX: personal health tracking and longevity insights (alpha).
+- traX: personal health tracking and longevity insights (sunset).
 
 ## Profiles
 

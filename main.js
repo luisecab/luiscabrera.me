@@ -10,8 +10,8 @@
     // ==========================================================================
 
     const greetings = ['Hola', 'Hello', 'Cześć', 'Salut', 'Ciao'];
-    const GREETING_MS = 320;   // time each greeting stays on screen
-    const SWAP_MS = 180;       // fade between greetings
+    const GREETING_MS = 650;   // time each greeting stays on screen
+    const SWAP_MS = 300;       // fade between greetings
 
     function runIntroAnimation() {
         const intro = document.getElementById('intro');
