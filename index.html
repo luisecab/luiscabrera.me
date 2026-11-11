@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Luis Cabrera: from product to software &amp; agentic engineering. Product-minded software engineer at P&amp;G, based in Warsaw. Building products with AI.">
-    <meta name="theme-color" content="#f8f7f4">
+    <meta name="theme-color" content="#05060b">
+    <meta name="color-scheme" content="dark">
     <title>Luis Cabrera: From product to software &amp; agentic engineering</title>
     <meta property="og:title" content="Luis Cabrera: From product to software &amp; agentic engineering">
     <meta property="og:description" content="Luis Cabrera: from product to software &amp; agentic engineering. Product-minded software engineer at P&amp;G, based in Warsaw. Building products with AI.">
@@ -20,7 +21,18 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.luiscabrera.me/">
     <link rel="alternate" type="text/plain" href="https://www.luiscabrera.me/llms.txt" title="llms.txt">
-    <noscript><style>.hero-name,.hero-tagline,.hero-links{opacity:1!important;transform:none!important}.intro{display:none!important}</style></noscript>
+    <script>
+        // Before first paint: enable JS-driven reveals, and decide whether the intro plays
+        // (not under reduced motion, and only once per session).
+        (function (root) {
+            root.classList.add('js');
+            try {
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('introSeen')) {
+                    root.classList.add('intro-active');
+                }
+            } catch (e) { /* storage blocked: skip the intro */ }
+        })(document.documentElement);
+    </script>
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -76,10 +88,9 @@
 }
     </script>
     <link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20261109b">
+    <link rel="stylesheet" href="styles.css?v=20261111a">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
     <!-- Intro Screen -->
@@ -87,71 +98,47 @@
         <div class="intro-content">
             <span class="intro-greeting" id="greeting"></span>
         </div>
+        <p class="intro-hint">Tap or press any key to skip</p>
     </div>
 
-    <!-- Animated Topographic Lines Background -->
-    <svg class="background-lines" id="topoLines" viewBox="0 0 1920 3000" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-        <!-- Topographic contour group 1 - upper section -->
-        <g class="topo-group topo-group-1">
-            <path class="flow-line line-1" d="M200,80 Q400,60 600,100 Q900,160 1100,120 Q1400,60 1700,140 Q1900,180 2100,120" />
-            <path class="flow-line line-2" d="M150,160 Q380,120 620,180 Q880,260 1120,200 Q1380,120 1680,220 Q1920,280 2150,200" />
-            <path class="flow-line line-3" d="M100,260 Q360,200 640,280 Q860,380 1140,300 Q1360,200 1660,320 Q1940,400 2200,300" />
-        </g>
-        <!-- Topographic contour group 2 -->
-        <g class="topo-group topo-group-2">
-            <path class="flow-line line-4" d="M-50,420 Q250,360 500,450 Q800,560 1050,480 Q1350,380 1600,500 Q1850,600 2100,480" />
-            <path class="flow-line line-5" d="M-100,520 Q220,440 520,550 Q780,680 1080,580 Q1320,460 1620,600 Q1880,720 2150,580" />
-            <path class="flow-line line-6" d="M-150,640 Q200,540 540,670 Q760,820 1100,700 Q1300,560 1640,720 Q1900,860 2200,700" />
-        </g>
-        <!-- Topographic contour group 3 - mid section -->
-        <g class="topo-group topo-group-3">
-            <path class="flow-line line-7" d="M2000,850 Q1700,780 1400,880 Q1100,1000 800,900 Q500,780 200,920 Q-50,1020 -200,900" />
-            <path class="flow-line line-8" d="M2050,980 Q1720,890 1420,1010 Q1080,1150 780,1030 Q480,890 180,1050 Q-80,1170 -250,1030" />
-            <path class="flow-line line-9" d="M2100,1130 Q1740,1020 1440,1160 Q1060,1320 760,1180 Q460,1020 160,1200 Q-110,1340 -300,1180" />
-        </g>
-        <!-- Topographic contour group 4 -->
-        <g class="topo-group topo-group-4">
-            <path class="flow-line line-10" d="M-100,1380 Q300,1280 600,1420 Q950,1580 1250,1440 Q1600,1280 1900,1460 Q2100,1580 2200,1460" />
-            <path class="flow-line line-11" d="M-150,1520 Q280,1400 620,1560 Q930,1740 1270,1580 Q1580,1400 1920,1600 Q2120,1740 2250,1600" />
-            <path class="flow-line line-12" d="M-200,1680 Q260,1540 640,1720 Q910,1920 1290,1740 Q1560,1540 1940,1760 Q2140,1920 2300,1760" />
-        </g>
-        <!-- Topographic contour group 5 - lower section -->
-        <g class="topo-group topo-group-5">
-            <path class="flow-line line-13" d="M2100,1950 Q1750,1850 1400,2000 Q1050,2180 700,2020 Q350,1850 0,2040 Q-200,2180 -350,2020" />
-            <path class="flow-line line-14" d="M2150,2120 Q1770,2000 1420,2170 Q1030,2370 680,2190 Q330,2000 -20,2210 Q-230,2370 -400,2190" />
-            <path class="flow-line line-15" d="M2200,2310 Q1790,2170 1440,2360 Q1010,2580 660,2380 Q310,2170 -40,2400 Q-260,2580 -450,2380" />
-        </g>
-        <!-- Topographic contour group 6 -->
-        <g class="topo-group topo-group-6">
-            <path class="flow-line line-16" d="M-100,2550 Q350,2420 700,2600 Q1100,2800 1450,2620 Q1850,2420 2200,2640 Q2350,2780 2400,2640" />
-            <path class="flow-line line-17" d="M-150,2720 Q330,2570 720,2770 Q1080,2990 1470,2790 Q1830,2570 2220,2810 Q2380,2970 2450,2810" />
-            <path class="flow-line line-18" d="M-200,2910 Q310,2740 740,2960 Q1060,3200 1490,2980 Q1810,2740 2240,3000 Q2410,3180 2500,3000" />
-        </g>
-    </svg>
+    <!-- Space backdrop: static nebula + animated starfield (drawn by main.js) -->
+    <div class="nebula" aria-hidden="true"></div>
+    <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
 
     <main>
         <!-- Hero Section -->
         <section class="hero" aria-labelledby="hero-title">
-            <h1 id="hero-title" class="hero-name">Luis Cabrera</h1>
-            <p class="hero-tagline"><strong>From product to software &amp; agentic engineering. Building products with AI.</strong></p>
-            <p class="hero-tagline">Global reach, based in Warsaw.</p>
-            <div class="hero-links">
-                <a href="https://github.com/luisecab" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                    <svg class="hero-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/in/luisecab/" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                    <svg class="hero-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                </a>
+            <div class="orbit" aria-hidden="true">
+                <div class="orbit-scene">
+                    <div class="orbit-ring ring-3"><span class="orbit-body"></span></div>
+                    <div class="orbit-ring ring-2"><span class="orbit-body"></span></div>
+                    <div class="orbit-ring ring-1"><span class="orbit-body"></span></div>
+                    <div class="orbit-core"></div>
+                </div>
+            </div>
+            <div class="hero-copy">
+                <p class="hero-eyebrow" aria-hidden="true">52.23° N · 21.01° E</p>
+                <h1 id="hero-title" class="hero-name">Luis Cabrera</h1>
+                <p class="hero-tagline"><strong>From product to software &amp; agentic engineering. Building products with AI.</strong></p>
+                <p class="hero-tagline">Global reach, based in Warsaw.</p>
+                <div class="hero-links">
+                    <a href="https://github.com/luisecab" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                        <svg class="hero-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/luisecab/" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                        <svg class="hero-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </section>
 
         <!-- About Section -->
         <section class="section" aria-labelledby="about-title">
-            <div class="glass-card fade-in">
+            <div class="glass-card">
                 <h2 id="about-title" class="section-title">About</h2>
                 <p class="about-text">
                     I'm a product-minded software engineer at P&amp;G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&amp;G as a product manager, working on Pampers' global CRM and messaging ecosystem.
@@ -173,9 +160,9 @@
 
         <!-- Projects Section -->
         <section class="section" aria-labelledby="projects-title">
-            <h2 id="projects-title" class="section-title fade-in">Projects</h2>
+            <h2 id="projects-title" class="section-title">Projects</h2>
             <div class="projects-grid">
-                <article class="glass-card project-card fade-in">
+                <article class="glass-card project-card spotlight">
                     <div class="project-header">
                         <h3 class="project-name">AdoptSI</h3>
                         <span class="project-status">Building</span>
@@ -186,9 +173,9 @@
                     <div class="project-tech">
                         <span class="tech-pill">AI Agents</span>
                     </div>
-                    <a href="https://adoptsi.si" target="_blank" rel="noopener noreferrer" class="project-link">Visit adoptsi.si →</a>
+                    <a href="https://adoptsi.si" target="_blank" rel="noopener noreferrer" class="project-link">Visit adoptsi.si <span class="arrow" aria-hidden="true">→</span></a>
                 </article>
-                <article class="glass-card project-card fade-in">
+                <article class="glass-card project-card spotlight">
                     <div class="project-header">
                         <h3 class="project-name">FotoReady</h3>
                         <span class="project-status">MVP</span>
@@ -202,9 +189,9 @@
                         <span class="tech-pill">Supabase</span>
                         <span class="tech-pill">Gemini AI</span>
                     </div>
-                    <a href="https://foto-ready.luisecab93.workers.dev/landing" target="_blank" rel="noopener noreferrer" class="project-link">Visit site →</a>
+                    <a href="https://foto-ready.luisecab93.workers.dev/landing" target="_blank" rel="noopener noreferrer" class="project-link">Visit site <span class="arrow" aria-hidden="true">→</span></a>
                 </article>
-                <article class="glass-card project-card fade-in">
+                <article class="glass-card project-card spotlight">
                     <div class="project-header">
                         <h3 class="project-name">traX</h3>
                         <span class="project-status status-sunset">Sunset</span>
@@ -223,8 +210,8 @@
 
         <!-- GitHub Activity Section -->
         <section class="section" aria-labelledby="github-title">
-            <h2 id="github-title" class="section-title fade-in">GitHub activity</h2>
-            <div class="glass-card github-card fade-in">
+            <h2 id="github-title" class="section-title">GitHub activity</h2>
+            <div class="glass-card github-card">
                 <a href="https://github.com/luisecab" target="_blank" rel="noopener noreferrer" class="github-chart-link">
                     <img src="https://ghchart.rshah.org/2d2d2d/luisecab" alt="Contribution graph for GitHub user luisecab over the last year" class="github-chart" width="663" height="104" loading="lazy" decoding="async">
                 </a>
@@ -390,9 +377,9 @@
         <!-- Hackathons Section -->
         <!-- To add a hackathon: copy one <article class="hackathon-card"> block (newest first). -->
         <section class="section" aria-labelledby="hackathons-title">
-            <h2 id="hackathons-title" class="section-title fade-in">Hackathons</h2>
+            <h2 id="hackathons-title" class="section-title">Hackathons</h2>
             <div class="hackathon-list">
-                <article class="glass-card hackathon-card fade-in">
+                <article class="glass-card hackathon-card spotlight">
                     <div class="hackathon-header">
                         <h3 class="hackathon-name"><a href="https://www.hackjunction.com/" target="_blank" rel="noopener noreferrer">Junction 2025</a></h3>
                         <span class="hackathon-date">14–16 Nov 2025</span>
@@ -406,9 +393,9 @@
 
         <!-- Education Section -->
         <section class="section" aria-labelledby="education-title">
-            <h2 id="education-title" class="section-title fade-in">Education</h2>
+            <h2 id="education-title" class="section-title">Education</h2>
             <div class="education-grid">
-                <article class="glass-card education-card fade-in">
+                <article class="glass-card education-card spotlight">
                     <div class="edu-header">
                         <div class="company-icon company-icon-img company-icon-logo">
                             <img src="logo-sgh.svg" alt="SGH Warsaw School of Economics logo" />
@@ -421,7 +408,7 @@
                         <span class="gpa">GPA 4.0</span>
                     </div>
                 </article>
-                <article class="glass-card education-card fade-in">
+                <article class="glass-card education-card spotlight">
                     <div class="edu-header">
                         <div class="company-icon company-icon-img company-icon-logo">
                             <img src="logo-ipn.svg" alt="Instituto Politécnico Nacional logo" />
@@ -439,8 +426,8 @@
 
         <!-- Contact Section -->
         <section class="section" aria-labelledby="contact-title">
-            <h2 id="contact-title" class="section-title fade-in">Get in Touch</h2>
-            <div class="glass-card contact-card fade-in">
+            <h2 id="contact-title" class="section-title">Get in Touch</h2>
+            <div class="glass-card contact-card">
                 <p class="contact-intro">Interested in working together or just want to connect? Drop your email and I'll send you my resume.</p>
                 <form id="cv-form" class="cv-form" novalidate>
                     <div class="form-group">
@@ -479,7 +466,7 @@
         </div>
     </footer>
 
-    <script src="main.js"></script>
+    <script src="main.js?v=20261111a"></script>
     <!-- Vercel Web Analytics: cookie-free, anonymous page views -->
     <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
     <script defer src="/_vercel/insights/script.js"></script>
