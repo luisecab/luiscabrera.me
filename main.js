@@ -47,6 +47,23 @@
         let shooting = null;
         let nextShootingAt = performance.now() + 6000;
 
+        // Dark matter: masses you cannot see, only the way they bend the light
+        // of the stars behind them. Two drift across the sky; the cursor is a third.
+        const darkMatter = [
+            { fx: 0.031, fy: 0.023, px: 0.0, py: 1.3, strength: 26, radius: 190 },
+            { fx: 0.019, fy: 0.037, px: 2.1, py: 0.4, strength: 18, radius: 150 },
+        ];
+        const lenses = [{ x: 0, y: 0, s: 0, r2: 1 }, { x: 0, y: 0, s: 0, r2: 1 }, { x: 0, y: 0, s: 0, r2: 1 }];
+
+        // Energy: ripples through space that shove the stars as they pass
+        const ripples = [];
+        const RIPPLE_SPEED = 0.75;  // px per ms
+        const RIPPLE_LIFE = 1700;
+        const RIPPLE_WIDTH = 110;
+
+        // The cosmic web: filaments between the brighter stars
+        let filaments = [];
+
         const glowSprite = (function () {
             const c = document.createElement('canvas');
             c.width = c.height = 64;
@@ -87,6 +104,24 @@
             }
             // Group by colour so fillStyle changes rarely while drawing
             stars.sort((a, b) => (a.color < b.color ? -1 : a.color > b.color ? 1 : 0));
+
+            // Link each brighter star to its two nearest bright neighbours
+            const nodes = stars.filter(st => st.d > 0.55).slice(0, 90);
+            const seen = {};
+            filaments = [];
+            nodes.forEach((a, i) => {
+                const near = nodes
+                    .map((b, j) => ({ j: j, dist: Math.hypot(a.x - b.x, a.y - b.y) }))
+                    .filter(o => o.j !== i && o.dist < 260)
+                    .sort((m, n) => m.dist - n.dist)
+                    .slice(0, 2);
+                near.forEach((o) => {
+                    const key = Math.min(i, o.j) + '-' + Math.max(i, o.j);
+                    if (seen[key]) return;
+                    seen[key] = true;
+                    filaments.push({ a: a, b: nodes[o.j], phase: Math.random() * Math.PI * 2 });
+                });
+            });
         }
 
         function resize() {
@@ -174,6 +209,26 @@
             const cy = h / 2;
             let currentColor = '';
 
+            // Where the invisible masses are right now
+            let lensCount = 0;
+            if (moving && warp < 0.002) {
+                for (let i = 0; i < darkMatter.length; i++) {
+                    const m = darkMatter[i];
+                    const l = lenses[lensCount++];
+                    l.x = w * (0.5 + 0.42 * Math.sin(time * m.fx + m.px));
+                    l.y = h * (0.5 + 0.38 * Math.sin(time * m.fy + m.py));
+                    l.s = m.strength;
+                    l.r2 = m.radius * m.radius;
+                }
+                if (pointer.cx > -1000) {
+                    const l = lenses[lensCount++];
+                    l.x = pointer.cx; l.y = pointer.cy; l.s = 12; l.r2 = 120 * 120;
+                }
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    if (now - ripples[i].born > RIPPLE_LIFE) ripples.splice(i, 1);
+                }
+            }
+
             for (let i = 0; i < stars.length; i++) {
                 const s = stars[i];
                 let x = s.x - px * s.d * 26;
@@ -184,6 +239,38 @@
 
                 let alpha = s.a;
                 if (moving) alpha *= 1 - s.twAmp * (0.5 + 0.5 * Math.sin(time * s.twSpeed + s.twPhase));
+
+                // Gravitational lensing: light bends away from each mass
+                for (let k = 0; k < lensCount; k++) {
+                    const l = lenses[k];
+                    const lx = x - l.x;
+                    const ly = y - l.y;
+                    const d2 = lx * lx + ly * ly;
+                    if (d2 > l.r2 * 9) continue;
+                    const d = Math.sqrt(d2) || 1;
+                    const push = l.s * l.r2 / (d2 + l.r2 * 0.25) * s.d;
+                    x += lx / d * push;
+                    y += ly / d * push;
+                }
+                // Energy ripples: a ring of pressure moving outward
+                let rippleGlow = 0;
+                for (let k = 0; k < ripples.length; k++) {
+                    const rp = ripples[k];
+                    const age = now - rp.born;
+                    const rx = x - rp.x;
+                    const ry = y - rp.y;
+                    const d = Math.sqrt(rx * rx + ry * ry) || 1;
+                    const off = d - age * RIPPLE_SPEED;
+                    if (off > RIPPLE_WIDTH || off < -RIPPLE_WIDTH) continue;
+                    const fade = 1 - age / RIPPLE_LIFE;
+                    const wave = Math.cos(off / RIPPLE_WIDTH * Math.PI / 2) * fade;
+                    x += rx / d * wave * 16 * s.d;
+                    y += ry / d * wave * 16 * s.d;
+                    rippleGlow = Math.max(rippleGlow, wave);
+                }
+                alpha = Math.min(1, alpha + rippleGlow * 0.6);
+                s.sx = x;
+                s.sy = y;
 
                 if (s.color !== currentColor) {
                     currentColor = s.color;
@@ -236,6 +323,45 @@
                 }
             }
             ctx.globalAlpha = 1;
+
+            // Cosmic web: faint filaments, brighter where energy passes
+            if (warp < 0.002 && filaments.length) {
+                ctx.strokeStyle = 'rgb(157,180,255)';
+                ctx.lineWidth = 0.6;
+                for (let i = 0; i < filaments.length; i++) {
+                    const f = filaments[i];
+                    const ax = f.a.sx, ay = f.a.sy, bx = f.b.sx, by = f.b.sy;
+                    // Skip links broken by the wrap-around at the screen edges
+                    if (Math.abs(ax - bx) > 300 || Math.abs(ay - by) > 300) continue;
+                    let a = moving ? 0.035 + 0.035 * Math.sin(time * 0.5 + f.phase) : 0.05;
+                    if (moving) {
+                        const mx = (ax + bx) / 2 - pointer.cx;
+                        const my = (ay + by) / 2 - pointer.cy;
+                        const dist = Math.sqrt(mx * mx + my * my);
+                        if (dist < 260) a += (1 - dist / 260) * 0.3;
+                    }
+                    ctx.globalAlpha = a;
+                    ctx.beginPath();
+                    ctx.moveTo(ax, ay);
+                    ctx.lineTo(bx, by);
+                    ctx.stroke();
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // The ripple fronts themselves, barely visible
+            for (let i = 0; i < ripples.length; i++) {
+                const rp = ripples[i];
+                const age = now - rp.born;
+                const fade = 1 - age / RIPPLE_LIFE;
+                if (fade <= 0) continue;
+                ctx.strokeStyle = 'rgba(190,205,255,' + (0.22 * fade * fade) + ')';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(rp.x, rp.y, age * RIPPLE_SPEED, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
             if (moving) drawShootingStar(now);
         }
 
@@ -278,6 +404,9 @@
         const onMotionPrefChange = () => (motionAllowed() ? start() : stop());
         if (reducedMotionQuery.addEventListener) reducedMotionQuery.addEventListener('change', onMotionPrefChange);
 
+        // Any click or tap releases a ripple of energy from that point
+        window.addEventListener('pointerdown', (e) => ripple(e.clientX, e.clientY), { passive: true });
+
         if (finePointer) {
             window.addEventListener('pointermove', (e) => {
                 pointer.tx = (e.clientX / w - 0.5) * 2;
@@ -292,10 +421,17 @@
             });
         }
 
+        function ripple(x, y) {
+            if (!motionAllowed()) return;
+            if (ripples.length >= 4) ripples.shift();
+            ripples.push({ x: x, y: y, born: performance.now() });
+        }
+
         resize();
         start();
 
         return {
+            ripple: ripple,
             warp(duration) {
                 if (!motionAllowed()) return;
                 warpStart = performance.now();
@@ -486,6 +622,21 @@
                 [0.3, 'rgba(110,120,255,0.07)'],
                 [1, 'rgba(110,120,255,0)'],
             ]);
+
+            // Its dark matter halo, visible only as arcs of lensed light
+            ctx.lineWidth = 1;
+            ctx.lineCap = 'round';
+            for (let k = 0; k < 4; k++) {
+                const radius = R * (0.84 + k * 0.075);
+                const spin = (moving ? time : 0) * (k % 2 ? -0.05 : 0.035) + k * 1.9;
+                ctx.strokeStyle = 'rgba(190,205,255,' + (0.22 - k * 0.035 + surge * 0.2) + ')';
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, spin, spin + 0.55 + k * 0.22);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, spin + Math.PI, spin + Math.PI + 0.3 + k * 0.12);
+                ctx.stroke();
+            }
 
             drawParticles(R, cx, cy, incl, roll, false, moving);
             drawJets(R, cx, cy, incl, roll, moving);

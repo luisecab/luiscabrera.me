@@ -1345,6 +1345,61 @@ html.js .footer-content.is-visible {
     background: linear-gradient(90deg, transparent, rgba(157, 180, 255, 0.4), transparent);
 }
 
+/* What the universe is made of, to scale */
+.cosmos {
+    max-width: 520px;
+    margin: 0 auto 28px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-subtle);
+}
+
+.cosmos-bar {
+    display: flex;
+    gap: 3px;
+    height: 3px;
+    margin-bottom: 10px;
+}
+
+.cosmos-bar span {
+    border-radius: 3px;
+}
+
+.cosmos-visible {
+    flex: 5;
+    background: #fff;
+    box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.8);
+}
+
+.cosmos-dark {
+    flex: 27;
+    background: rgba(157, 130, 255, 0.28);
+}
+
+.cosmos-energy {
+    flex: 68;
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 7px);
+}
+
+.cosmos-labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.cosmos-labels span:first-child {
+    color: var(--color-text);
+}
+
+.cosmos-note {
+    margin-top: 14px;
+    text-transform: none;
+    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+}
+
 /* Morse. Decode it, then type it (or just press it). */
 .footer-cipher {
     display: inline-block;
@@ -1620,6 +1675,7 @@ html.js .footer-content.is-visible {
     .nebula,
     .orbit,
     .timeline-pulse,
+    .cosmos,
     .footer-cipher,
     .intro {
         display: none !important;
