@@ -12,7 +12,7 @@ Global reach, based in Warsaw.
 
 I'm a product-minded software engineer at P&G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&G as a product manager, working on Pampers' global CRM and messaging ecosystem.
 
-In 2025, I moved from defining products to building them, transitioning into mobile software engineering with Flutter and Dart. I also completed an MSc in Big Data & Advanced Analytics at SGH Warsaw School of Economics.
+In 2026, I moved from defining products to building them, transitioning into mobile software engineering with Flutter and Dart. I also completed an MSc in Big Data & Advanced Analytics at SGH Warsaw School of Economics.
 
 Today, I'm taking that journey further into agentic engineering. I build and orchestrate teams of AI agents, experiment with self-hosted infrastructure like Hermes, and develop products that turn AI into practical solutions.
 
@@ -42,36 +42,37 @@ Contribution graph: https://github.com/luisecab
 
 ## Experience
 
-### Procter & Gamble — Warsaw, Poland (2023 - Present)
+### Procter & Gamble — Warsaw, Poland (Mar 2022 - Present)
 
-**Software Engineer – Mobile (Flutter/Dart)**, 2025 - Present
+**Software Engineer – Mobile (Flutter/Dart)**, Aug 2026 - Present
 - Build and maintain mobile app features with Flutter and Dart.
 - Write and review code, tests and technical designs with the engineering team.
 - Integrate the app with backend APIs and work on reliability and performance.
 
-**Product Manager**, 2023 - 2025
+**Product Manager**, Mar 2022 - Jul 2026
 - Defined the multi-year global CRM Product Vision for Pampers and converted it into a technical roadmap for Braze/Segment integration to improve lifecycle orchestration and CLTV outcomes.
 - Owned the yearly messaging vision budget for Pampers, aligning investment decisions with roadmap priorities, delivery capacity, and expected ROI.
 - Led the proof of concept for API campaign automation, laying the foundations for an agentic-agency operating model and faster campaign execution.
 - Engineered scalable event ingestion and API architecture, reducing API load by 1,200 bps and improving platform reliability for millions of global users.
+- Recognized with the P&G CEO Award (Top 2%).
 - Established global standards for data governance, retention logic, and campaign measurement, improving campaign creation speed by 1,000 bps.
 - Media Optimization: led predictive scoring initiatives and real-time Power BI/GCP dashboards that improved media investment decisions and increased incremental ROAS by 10% on the annual media spend budget.
 - Unified cross-region analytics workflows into one reporting model, improving metric transparency and prioritization speed.
 - Orchestrated multi-market requirements for an MVP campaign-management in-housing transformation.
 
 ### Foxtrot Systems (Descartes) — CDMX, Mexico (May 2021 - Jan 2022)
-**Account Product Manager**
+**Account Project Manager**
 - Rolled out AI-driven logistics SaaS in 12 countries
 - Built Tableau KPIs portal that lifted adoption from 69% to 80%
 
 ### Mercado Libre — CDMX, Mexico (Apr 2020 - May 2021)
-**Product - Shipping**
+**Supervisor – Product Last Mile Ops**
 - Headed quality analytics, training, process audits & control-tower team
 - Expansion and scaling of shipping operations
 - +0.40pp in delivery success rate
 
-### FREENOW (Beat) — CDMX, Mexico (May 2019 - Apr 2020)
-**Operations Specialist / Project Specialist**
+### FREENOW (Beat) — CDMX, Mexico (May 2018 - Apr 2020)
+**Operations Specialist**
 - Managed rental fleet operations
 - Liability insurance roll-out
 - Driver lifecycle management
