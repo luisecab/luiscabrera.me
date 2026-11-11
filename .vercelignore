@@ -1,3 +1,4 @@
 # Not part of the website: keep out of Vercel deployments
 .claude/
 portfolio-prompt.md
+CLAUDE.md

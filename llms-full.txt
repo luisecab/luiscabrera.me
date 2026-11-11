@@ -10,11 +10,11 @@ Global reach, based in Warsaw.
 
 ## About
 
-I'm a product-minded software engineer at P&G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&G as a product manager, working on Pampers' global CRM and messaging ecosystem.
+I'm a product-minded mobile software engineer at P&G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&G as a product manager, working on Pampers' global CRM and messaging ecosystem.
 
 In 2026, I moved from defining products to building them, transitioning into mobile software engineering with Flutter and Dart. I also completed an MSc in Big Data & Advanced Analytics at SGH Warsaw School of Economics.
 
-Today, I'm taking that journey further into agentic engineering. I build and orchestrate teams of AI agents, experiment with self-hosted infrastructure like Hermes, and develop products that turn AI into practical solutions.
+Today, I'm applying agentic engineering in the mobile space. In my current role I build mobile software with Flutter and Dart, working with teams of AI agents that I build and orchestrate. Outside of it, I experiment with self-hosted infrastructure like Hermes and develop products that turn AI into practical solutions.
 
 I built FotoReady, helping small sellers in Mexico transform a single product photo into marketplace-ready images, and founded AdoptSI (https://adoptsi.si), focused on bringing AI agents and automation to traditional businesses.
 
@@ -45,6 +45,7 @@ Contribution graph: https://github.com/luisecab
 ### Procter & Gamble — Warsaw, Poland (Mar 2022 - Present)
 
 **Software Engineer – Mobile (Flutter/Dart)**, Aug 2026 - Present
+- Apply agentic engineering to mobile development, building and orchestrating AI agents in the engineering workflow.
 - Build and maintain mobile app features with Flutter and Dart.
 - Write and review code, tests and technical designs with the engineering team.
 - Integrate the app with backend APIs and work on reliability and performance.
