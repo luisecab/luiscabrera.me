@@ -379,6 +379,7 @@ main {
 }
 
 /* Hero entrance: staggered blur-up, played once the intro hands over */
+html.js .cosmos,
 html.js .hero-eyebrow,
 html.js .hero-name,
 html.js .hero-tagline,
@@ -397,6 +398,7 @@ html.js .hero-tagline { transition-delay: 140ms; }
 html.js .hero-tagline + .hero-tagline { transition-delay: 190ms; }
 html.js .hero-links { transition-delay: 260ms; }
 
+html.js .hero.revealed .cosmos,
 html.js .hero.revealed .hero-eyebrow,
 html.js .hero.revealed .hero-name,
 html.js .hero.revealed .hero-tagline,
@@ -1347,8 +1349,11 @@ html.js .footer-content.is-visible {
 
 /* What the universe is made of, to scale */
 .cosmos {
-    max-width: 520px;
-    margin: 0 auto 28px;
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
+    z-index: 1;
     font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.1em;
@@ -1594,6 +1599,12 @@ html.js .footer-content.is-visible {
 }
 
 @media (max-width: 480px) {
+    .cosmos {
+        top: 20px;
+        font-size: 0.58rem;
+        letter-spacing: 0.06em;
+    }
+
     .hero-name {
         font-size: 2.9rem;
     }
@@ -1618,6 +1629,7 @@ html.js .footer-content.is-visible {
         scroll-behavior: auto;
     }
 
+    html.js .cosmos,
     html.js .hero-eyebrow,
     html.js .hero-name,
     html.js .hero-tagline,
@@ -1710,6 +1722,7 @@ html.js .footer-content.is-visible {
         color: #111;
     }
 
+    html.js .cosmos,
     html.js .hero-eyebrow,
     html.js .hero-name,
     html.js .hero-tagline,
