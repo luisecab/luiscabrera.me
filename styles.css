@@ -115,6 +115,38 @@ summary:focus-visible {
         radial-gradient(70% 45% at 55% 112%, rgba(50, 160, 220, 0.10) 0%, rgba(50, 160, 220, 0.04) 45%, transparent 75%);
 }
 
+/* Two slow clouds of dust drifting through the nebula (transform only) */
+.nebula::before,
+.nebula::after {
+    content: '';
+    position: absolute;
+    width: 70vmax;
+    height: 70vmax;
+    border-radius: 50%;
+}
+
+.nebula::before {
+    top: -25vmax;
+    right: -20vmax;
+    background: radial-gradient(circle, rgba(120, 100, 255, 0.13) 0%, rgba(120, 100, 255, 0.05) 40%, transparent 70%);
+    animation: drift-a 70s ease-in-out infinite alternate;
+}
+
+.nebula::after {
+    bottom: -30vmax;
+    left: -25vmax;
+    background: radial-gradient(circle, rgba(255, 150, 110, 0.07) 0%, rgba(200, 90, 200, 0.04) 40%, transparent 70%);
+    animation: drift-b 90s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+    to { transform: translate(-14vmax, 10vmax) scale(1.15); }
+}
+
+@keyframes drift-b {
+    to { transform: translate(16vmax, -8vmax) scale(1.1); }
+}
+
 .starfield {
     position: fixed;
     inset: 0;
@@ -240,6 +272,25 @@ main {
     line-height: 1.2;
     color: var(--color-text);
     margin-bottom: 32px;
+}
+
+/* Cryptic chapter label above each title */
+.section-title[data-cue] {
+    position: relative;
+    padding-top: 26px;
+}
+
+.section-title[data-cue]::after {
+    content: attr(data-cue);
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text-subtle);
 }
 
 /* A four-point star before each section title */
@@ -389,11 +440,10 @@ html.js .hero.revealed .hero-links {
 .orbit {
     position: absolute;
     top: 50%;
-    right: -140px;
-    width: 520px;
+    right: -180px;
+    width: 620px;
     aspect-ratio: 1;
     translate: 0 -50%;
-    perspective: 1400px;
     pointer-events: none;
     z-index: 0;
 }
@@ -409,76 +459,24 @@ html.js .hero.revealed .orbit {
     scale: 1;
 }
 
-.orbit-scene {
+.galaxy {
     position: absolute;
     inset: 0;
-    transform-style: preserve-3d;
-    transform: rotateX(68deg) rotateZ(-18deg);
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
 }
 
-.orbit-ring {
+.orbit-cue {
     position: absolute;
-    top: 50%;
     left: 50%;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.11);
-    transform-style: preserve-3d;
-    animation: orbit-spin linear infinite;
-}
-
-.ring-1 { width: 48%; height: 48%; margin: -24% 0 0 -24%; animation-duration: 16s; animation-delay: -4s; }
-.ring-2 { width: 72%; height: 72%; margin: -36% 0 0 -36%; animation-duration: 28s; animation-delay: -17s; border-color: rgba(157, 180, 255, 0.14); }
-.ring-3 { width: 96%; height: 96%; margin: -48% 0 0 -48%; animation-duration: 46s; animation-delay: -30s; border-style: dashed; border-color: rgba(255, 255, 255, 0.08); }
-
-/* Each body counter-rotates so it always faces the viewer */
-.orbit-body {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) rotateZ(0deg) rotateZ(18deg) rotateX(-68deg);
-    animation: orbit-counter linear infinite;
-    animation-duration: inherit;
-    animation-delay: inherit;
-}
-
-/* Glow is painted inside each body's own box: box-shadow gets clipped in 3D layers */
-.ring-1 .orbit-body { width: 30px; height: 30px; background: radial-gradient(circle, #fff 0 12%, rgba(255, 255, 255, 0.35) 22%, rgba(255, 255, 255, 0.08) 45%, transparent 70%); }
-.ring-2 .orbit-body { width: 44px; height: 44px; background: radial-gradient(circle, var(--color-warm) 0 13%, rgba(255, 217, 168, 0.32) 22%, rgba(255, 217, 168, 0.07) 45%, transparent 70%); }
-.ring-3 .orbit-body { width: 28px; height: 28px; background: radial-gradient(circle, var(--color-accent) 0 11%, rgba(157, 180, 255, 0.4) 21%, rgba(157, 180, 255, 0.08) 45%, transparent 70%); }
-
-.orbit-core {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 92px;
-    height: 92px;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) rotateZ(18deg) rotateX(-68deg);
-    background: radial-gradient(circle at 34% 30%, #f4f2ff 0%, #b7c6ff 18%, #5a6bc4 46%, #1c2355 74%, #0a0d22 100%);
-    box-shadow: inset -12px -14px 24px rgba(0, 0, 0, 0.55);
-}
-
-/* The planet's atmosphere glow lives outside the 3D scene so it is never clipped */
-.orbit::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 300px;
-    translate: -50% -50%;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(120, 140, 255, 0.30) 0%, rgba(98, 112, 255, 0.12) 22%, rgba(98, 112, 255, 0.04) 45%, transparent 70%);
-}
-
-@keyframes orbit-spin {
-    to { transform: rotateZ(360deg); }
-}
-
-@keyframes orbit-counter {
-    from { transform: translate(-50%, -50%) rotateZ(0deg) rotateZ(18deg) rotateX(-68deg); }
-    to { transform: translate(-50%, -50%) rotateZ(-360deg) rotateZ(18deg) rotateX(-68deg); }
+    bottom: 12%;
+    translate: -50% 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--color-text-subtle);
+    opacity: 0.7;
 }
 
 /* ==========================================================================
@@ -557,6 +555,20 @@ html.js .footer-content.is-visible {
 
 .about-text:last-child {
     color: var(--color-text);
+}
+
+.journey-cue {
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--color-text-subtle);
+    font-variant-numeric: tabular-nums;
+}
+
+.journey-cue span {
+    color: var(--color-accent);
+    margin: 0 6px;
 }
 
 /* ==========================================================================
@@ -721,6 +733,31 @@ html.js .footer-content.is-visible {
         rgba(157, 180, 255, 0.35) 35%,
         rgba(255, 255, 255, 0.08) 100%
     );
+}
+
+/* A pulse of energy travelling down the line */
+.timeline-pulse {
+    position: absolute;
+    left: -1px;
+    top: 44px;
+    bottom: 40px;
+    width: 3px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.timeline-pulse i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(180deg, transparent calc(100% - 120px), rgba(157, 180, 255, 0.5) calc(100% - 40px), #fff 100%);
+    border-radius: 3px;
+    transform: translateY(-100%);
+    animation: pulse-travel 9s linear 3s infinite;
+}
+
+@keyframes pulse-travel {
+    0% { transform: translateY(-100%); }
+    55%, 100% { transform: translateY(12%); }
 }
 
 .experience-card {
@@ -1308,6 +1345,26 @@ html.js .footer-content.is-visible {
     background: linear-gradient(90deg, transparent, rgba(157, 180, 255, 0.4), transparent);
 }
 
+/* Morse. Decode it, then type it (or just press it). */
+.footer-cipher {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--color-text-subtle);
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color var(--dur-hover) ease, transform var(--dur-press) var(--ease-out);
+}
+
+.footer-cipher:active {
+    transform: scale(0.96);
+}
+
 .footer-links {
     font-size: 0.85rem;
     color: var(--color-text-muted);
@@ -1346,7 +1403,8 @@ html.js .footer-content.is-visible {
         opacity: 1;
     }
 
-    .project-link:hover {
+    .project-link:hover,
+    .footer-cipher:hover {
         color: var(--color-accent);
     }
 
@@ -1381,8 +1439,7 @@ html.js .footer-content.is-visible {
 
 @media (max-width: 1100px) {
     .orbit {
-        right: -200px;
-        opacity: 0.8;
+        right: -260px;
     }
 }
 
@@ -1401,20 +1458,14 @@ html.js .footer-content.is-visible {
     }
 
     .orbit {
-        top: 0;
-        right: -120px;
-        width: 320px;
+        top: -30px;
+        right: -150px;
+        width: 380px;
         translate: 0 0;
     }
 
-    .orbit-core {
-        width: 64px;
-        height: 64px;
-    }
-
-    .orbit::before {
-        width: 220px;
-        height: 220px;
+    .orbit-cue {
+        display: none;
     }
 
     html.js .hero.revealed .orbit {
@@ -1447,7 +1498,8 @@ html.js .footer-content.is-visible {
         top: 38px;
     }
 
-    .experience-list::before {
+    .experience-list::before,
+    .timeline-pulse {
         top: 40px;
     }
 
@@ -1492,8 +1544,8 @@ html.js .footer-content.is-visible {
     }
 
     .orbit {
-        right: -130px;
-        width: 290px;
+        right: -150px;
+        width: 340px;
     }
 
     .projects-grid,
@@ -1530,9 +1582,10 @@ html.js .footer-content.is-visible {
         transition-duration: 300ms;
     }
 
-    .orbit-ring,
-    .orbit-body {
-        animation-play-state: paused;
+    .nebula::before,
+    .nebula::after,
+    .timeline-pulse i {
+        animation: none;
     }
 
     .experience-card:first-child::after {
@@ -1566,6 +1619,8 @@ html.js .footer-content.is-visible {
     .starfield,
     .nebula,
     .orbit,
+    .timeline-pulse,
+    .footer-cipher,
     .intro {
         display: none !important;
     }

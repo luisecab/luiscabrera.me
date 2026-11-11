@@ -88,7 +88,7 @@
 }
     </script>
     <link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20261111a">
+    <link rel="stylesheet" href="styles.css?v=20261111b">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -109,12 +109,8 @@
         <!-- Hero Section -->
         <section class="hero" aria-labelledby="hero-title">
             <div class="orbit" aria-hidden="true">
-                <div class="orbit-scene">
-                    <div class="orbit-ring ring-3"><span class="orbit-body"></span></div>
-                    <div class="orbit-ring ring-2"><span class="orbit-body"></span></div>
-                    <div class="orbit-ring ring-1"><span class="orbit-body"></span></div>
-                    <div class="orbit-core"></div>
-                </div>
+                <canvas class="galaxy" id="galaxy"></canvas>
+                <span class="orbit-cue">E = mc²</span>
             </div>
             <div class="hero-copy">
                 <p class="hero-eyebrow" aria-hidden="true">52.23° N · 21.01° E</p>
@@ -139,15 +135,15 @@
         <!-- About Section -->
         <section class="section" aria-labelledby="about-title">
             <div class="glass-card">
-                <h2 id="about-title" class="section-title">About</h2>
+                <h2 id="about-title" class="section-title" data-cue="01 / Origin">About</h2>
                 <p class="about-text">
-                    I'm a product-minded software engineer at P&amp;G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&amp;G as a product manager, working on Pampers' global CRM and messaging ecosystem.
+                    I'm a product-minded mobile software engineer at P&amp;G, based in Warsaw, Poland. My career started in Mexico, working across operations and product at FREENOW, Mercado Libre, and Foxtrot Systems. I later joined P&amp;G as a product manager, working on Pampers' global CRM and messaging ecosystem.
                 </p>
                 <p class="about-text">
                     In 2026, I moved from defining products to building them, transitioning into mobile software engineering with Flutter and Dart. I also completed an MSc in Big Data &amp; Advanced Analytics at SGH Warsaw School of Economics.
                 </p>
                 <p class="about-text">
-                    Today, I'm taking that journey further into agentic engineering. I build and orchestrate teams of AI agents, experiment with self-hosted infrastructure like Hermes, and develop products that turn AI into practical solutions.
+                    Today, I'm applying agentic engineering in the mobile space. In my current role I build mobile software with Flutter and Dart, working with teams of AI agents that I build and orchestrate. Outside of it, I experiment with self-hosted infrastructure like Hermes and develop products that turn AI into practical solutions.
                 </p>
                 <p class="about-text">
                     I built FotoReady, helping small sellers in Mexico transform a single product photo into marketplace-ready images, and founded <a href="https://adoptsi.si" target="_blank" rel="noopener noreferrer" class="inline-link">AdoptSI</a>, focused on bringing AI agents and automation to traditional businesses.
@@ -155,12 +151,13 @@
                 <p class="about-text">
                     What drives me: building AI systems that are reliable, testable, and affordable enough to solve real-world problems every day.
                 </p>
+                <p class="journey-cue" aria-hidden="true">19.43° N 99.13° W <span>→</span> 52.23° N 21.01° E</p>
             </div>
         </section>
 
         <!-- Projects Section -->
         <section class="section" aria-labelledby="projects-title">
-            <h2 id="projects-title" class="section-title">Projects</h2>
+            <h2 id="projects-title" class="section-title" data-cue="02 / Matter">Projects</h2>
             <div class="projects-grid">
                 <article class="glass-card project-card spotlight">
                     <div class="project-header">
@@ -210,7 +207,7 @@
 
         <!-- GitHub Activity Section -->
         <section class="section" aria-labelledby="github-title">
-            <h2 id="github-title" class="section-title">GitHub activity</h2>
+            <h2 id="github-title" class="section-title" data-cue="03 / Signal">GitHub activity</h2>
             <div class="glass-card github-card">
                 <a href="https://github.com/luisecab" target="_blank" rel="noopener noreferrer" class="github-chart-link">
                     <img src="https://ghchart.rshah.org/2d2d2d/luisecab" alt="Contribution graph for GitHub user luisecab over the last year" class="github-chart" width="663" height="104" loading="lazy" decoding="async">
@@ -221,8 +218,9 @@
 
         <!-- Experience Section -->
         <section class="section" aria-labelledby="experience-title">
-            <h2 id="experience-title" class="section-title">Experience</h2>
+            <h2 id="experience-title" class="section-title" data-cue="04 / Trajectory">Experience</h2>
             <div class="experience-list">
+                <span class="timeline-pulse" aria-hidden="true"><i></i></span>
                 <!-- Procter & Gamble: one header, two roles -->
                 <article class="experience-card">
                     <div class="experience-header">
@@ -253,6 +251,7 @@
                                 <span class="role-dates">Aug 2026 - Present</span>
                             </div>
                             <ul class="experience-bullets">
+                                <li>Apply agentic engineering to mobile development, building and orchestrating AI agents in the engineering workflow.</li>
                                 <li>Build and maintain mobile app features with Flutter and Dart.</li>
                                 <li>Write and review code, tests and technical designs with the engineering team.</li>
                                 <li>Integrate the app with backend APIs and work on reliability and performance.</li>
@@ -377,7 +376,7 @@
         <!-- Hackathons Section -->
         <!-- To add a hackathon: copy one <article class="hackathon-card"> block (newest first). -->
         <section class="section" aria-labelledby="hackathons-title">
-            <h2 id="hackathons-title" class="section-title">Hackathons</h2>
+            <h2 id="hackathons-title" class="section-title" data-cue="05 / Collisions">Hackathons</h2>
             <div class="hackathon-list">
                 <article class="glass-card hackathon-card spotlight">
                     <div class="hackathon-header">
@@ -393,7 +392,7 @@
 
         <!-- Education Section -->
         <section class="section" aria-labelledby="education-title">
-            <h2 id="education-title" class="section-title">Education</h2>
+            <h2 id="education-title" class="section-title" data-cue="06 / Formation">Education</h2>
             <div class="education-grid">
                 <article class="glass-card education-card spotlight">
                     <div class="edu-header">
@@ -426,7 +425,7 @@
 
         <!-- Contact Section -->
         <section class="section" aria-labelledby="contact-title">
-            <h2 id="contact-title" class="section-title">Get in Touch</h2>
+            <h2 id="contact-title" class="section-title" data-cue="07 / Transmission">Get in Touch</h2>
             <div class="glass-card contact-card">
                 <p class="contact-intro">Interested in working together or just want to connect? Drop your email and I'll send you my resume.</p>
                 <form id="cv-form" class="cv-form" novalidate>
@@ -460,13 +459,14 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
+            <button type="button" class="footer-cipher" id="cipher" aria-label="A message in Morse code">·−−&nbsp; ·−&nbsp; ·−·&nbsp; ·−−·</button>
             <p class="footer-links"><a href="https://adoptsi.si" target="_blank" rel="noopener noreferrer">Building AdoptSI →</a></p>
             <p class="footer-privacy">Privacy: page views are counted anonymously with Vercel Web Analytics, without cookies. No ads, no tracking. If you request the CV, the email you enter is used to send it to you.</p>
             <p class="footer-copy">&copy; 2026 Luis Cabrera. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="main.js?v=20261111a"></script>
+    <script src="main.js?v=20261111b"></script>
     <!-- Vercel Web Analytics: cookie-free, anonymous page views -->
     <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
     <script defer src="/_vercel/insights/script.js"></script>

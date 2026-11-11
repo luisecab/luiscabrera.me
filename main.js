@@ -36,7 +36,8 @@
         let time = 0;
 
         // Pointer parallax, interpolated with a spring so it has momentum
-        const pointer = { tx: 0, ty: 0, x: 0, y: 0, vx: 0, vy: 0 };
+        const pointer = { tx: 0, ty: 0, x: 0, y: 0, vx: 0, vy: 0, cx: -9999, cy: -9999 };
+        const EXCITE_RADIUS = 170; // stars inside this radius of the cursor light up
         const SPRING_K = 38;   // stiffness
         const SPRING_C = 11;   // damping (slightly under critical for a soft settle)
 
@@ -202,15 +203,33 @@
                     continue;
                 }
 
+                // Energy: the cursor excites nearby stars
+                let radius = s.r;
+                let excited = 0;
+                if (moving) {
+                    const ex = x - pointer.cx;
+                    const ey = y - pointer.cy;
+                    const dist2 = ex * ex + ey * ey;
+                    if (dist2 < EXCITE_RADIUS * EXCITE_RADIUS) {
+                        excited = 1 - Math.sqrt(dist2) / EXCITE_RADIUS;
+                        alpha = Math.min(1, alpha + excited * 0.7);
+                        radius = s.r * (1 + excited * 0.9);
+                    }
+                }
+
                 ctx.globalAlpha = alpha;
-                if (s.r < 0.9) {
-                    ctx.fillRect(x - s.r, y - s.r, s.r * 2, s.r * 2);
+                if (radius < 0.9) {
+                    ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
                 } else {
                     ctx.beginPath();
-                    ctx.arc(x, y, s.r, 0, Math.PI * 2);
+                    ctx.arc(x, y, radius, 0, Math.PI * 2);
                     ctx.fill();
                 }
-                if (s.glow) {
+                if (excited > 0.35) {
+                    const size = radius * 9;
+                    ctx.globalAlpha = (excited - 0.35) * 0.9;
+                    ctx.drawImage(glowSprite, x - size / 2, y - size / 2, size, size);
+                } else if (s.glow) {
                     const size = s.r * 10;
                     ctx.globalAlpha = alpha * 0.55;
                     ctx.drawImage(glowSprite, x - size / 2, y - size / 2, size, size);
@@ -263,10 +282,13 @@
             window.addEventListener('pointermove', (e) => {
                 pointer.tx = (e.clientX / w - 0.5) * 2;
                 pointer.ty = (e.clientY / h - 0.5) * 2;
+                pointer.cx = e.clientX;
+                pointer.cy = e.clientY;
             }, { passive: true });
             document.documentElement.addEventListener('pointerleave', () => {
                 pointer.tx = 0;
                 pointer.ty = 0;
+                pointer.cx = pointer.cy = -9999;
             });
         }
 
@@ -281,6 +303,296 @@
                 nextShootingAt = Math.max(nextShootingAt, warpStart + duration + 4000);
             },
         };
+    }
+
+    // ==========================================================================
+    // Galaxy: a star, a disk of matter falling around it, and jets of energy.
+    // Kepler-ish orbits (inner matter moves faster), additive light.
+    // Click it: the core releases a shockwave.
+    // ==========================================================================
+
+    function createGalaxy(canvas) {
+        const ctx = canvas && canvas.getContext('2d');
+        if (!ctx) return null;
+
+        const INCLINATION = 71 * Math.PI / 180;
+        const ROLL = -17 * Math.PI / 180;
+
+        let size = 0;
+        let particles = [];
+        let running = false;
+        let visible = true;
+        let rafId = 0;
+        let last = 0;
+        let time = 0;
+        const tilt = { tx: 0, ty: 0, x: 0, y: 0, vx: 0, vy: 0 };
+        const waves = [];   // shockwaves: { born }
+        let surge = 0;      // extra core energy after a click, decays
+
+        function motionAllowed() {
+            return !reducedMotionQuery.matches;
+        }
+
+        // Warm near the star, white in the middle, blue at the cold edge
+        function colorAt(r) {
+            if (r < 0.35) return '255,214,170';
+            if (r < 0.6) return '255,240,228';
+            if (r < 0.8) return '205,218,255';
+            return '150,175,255';
+        }
+
+        function populate() {
+            const count = size < 400 ? 700 : 1500;
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                // Three loose rings with gaps, denser toward the centre
+                const band = Math.random();
+                let r;
+                if (band < 0.45) r = 0.16 + Math.random() * 0.2;
+                else if (band < 0.8) r = 0.42 + Math.random() * 0.2;
+                else r = 0.7 + Math.random() * 0.26;
+                particles.push({
+                    r: r,
+                    angle: Math.random() * Math.PI * 2,
+                    speed: 0.05 / Math.pow(r, 1.5),          // radians per second
+                    lift: (Math.random() - 0.5) * 0.035 * (0.4 + r), // thickness of the disk
+                    px: 0.7 + Math.random() * (r < 0.4 ? 1.3 : 1.1),
+                    alpha: 0.4 + Math.random() * 0.6,
+                    color: 'rgb(' + colorAt(r + (Math.random() - 0.5) * 0.15) + ')',
+                    phase: Math.random() * Math.PI * 2,
+                });
+            }
+            particles.sort((a, b) => (a.color < b.color ? -1 : a.color > b.color ? 1 : 0));
+        }
+
+        function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const next = canvas.clientWidth;
+            if (!next) return;
+            const changed = next !== size;
+            size = next;
+            canvas.width = canvas.height = Math.round(size * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            if (changed || !particles.length) populate();
+            if (!running) draw(performance.now());
+        }
+
+        function glow(x, y, radius, stops) {
+            const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+            for (let i = 0; i < stops.length; i++) g.addColorStop(stops[i][0], stops[i][1]);
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawParticles(R, cx, cy, incl, roll, nearHalf, moving) {
+            const cosI = Math.cos(incl);
+            const sinI = Math.sin(incl);
+            const cosR = Math.cos(roll);
+            const sinR = Math.sin(roll);
+            let currentColor = '';
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                const a = p.angle + (moving ? time * p.speed : 0);
+                const dy = Math.sin(a) * p.r;
+                if ((dy > 0) !== nearHalf) continue;
+                const dx = Math.cos(a) * p.r;
+                const sx = dx;
+                const sy = dy * cosI - p.lift * sinI;
+                const x = cx + (sx * cosR - sy * sinR) * R;
+                const y = cy + (sx * sinR + sy * cosR) * R;
+                if (p.color !== currentColor) {
+                    currentColor = p.color;
+                    ctx.fillStyle = currentColor;
+                }
+                const flicker = moving ? 0.75 + 0.25 * Math.sin(time * 1.3 + p.phase) : 1;
+                // Matter on the near side reads brighter
+                ctx.globalAlpha = Math.min(1, p.alpha * flicker * (nearHalf ? 1 : 0.6) * (1 + surge * 0.6));
+                ctx.fillRect(x - p.px / 2, y - p.px / 2, p.px, p.px);
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        function drawJets(R, cx, cy, incl, roll, moving) {
+            // The disk's axis, projected to the screen
+            const len = R * 0.95 * Math.sin(incl);
+            const ax = Math.sin(roll);
+            const ay = -Math.cos(roll);
+            const energy = 0.55 + (moving ? 0.12 * Math.sin(time * 0.9) : 0) + surge * 0.5;
+            for (let side = -1; side <= 1; side += 2) {
+                const ex = cx + ax * len * side;
+                const ey = cy + ay * len * side;
+                const g = ctx.createLinearGradient(cx, cy, ex, ey);
+                g.addColorStop(0, 'rgba(200,215,255,' + (0.5 * energy) + ')');
+                g.addColorStop(0.35, 'rgba(157,180,255,' + (0.16 * energy) + ')');
+                g.addColorStop(1, 'rgba(157,180,255,0)');
+                ctx.strokeStyle = g;
+                ctx.lineCap = 'round';
+                ctx.lineWidth = 9;
+                ctx.globalAlpha = 0.35;
+                ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ex, ey); ctx.stroke();
+                ctx.lineWidth = 1.6;
+                ctx.globalAlpha = 1;
+                ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ex, ey); ctx.stroke();
+                if (!moving) continue;
+                // Packets of energy leaving along the jet
+                ctx.fillStyle = '#fff';
+                for (let k = 0; k < 4; k++) {
+                    const t = ((time * 0.22 + k / 4) % 1);
+                    ctx.globalAlpha = (1 - t) * 0.8;
+                    const px = cx + ax * len * side * t;
+                    const py = cy + ay * len * side * t;
+                    ctx.fillRect(px - 0.9, py - 0.9, 1.8, 1.8);
+                }
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function drawWaves(R, cx, cy, incl, roll, now) {
+            for (let i = waves.length - 1; i >= 0; i--) {
+                const t = (now - waves[i].born) / 1400;
+                if (t >= 1) { waves.splice(i, 1); continue; }
+                const e = easeOutQuart(t);
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(roll);
+                ctx.scale(1, Math.cos(incl));
+                ctx.strokeStyle = 'rgba(200,215,255,' + (0.8 * (1 - t)) + ')';
+                ctx.lineWidth = 2 / Math.cos(incl) * (1 - t) + 0.5;
+                ctx.beginPath();
+                ctx.arc(0, 0, R * (0.1 + e * 1.0), 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function draw(now) {
+            const moving = motionAllowed();
+            const R = size * 0.46;
+            const cx = size / 2;
+            const cy = size / 2;
+            const incl = INCLINATION + tilt.y * 0.12;
+            const roll = ROLL + tilt.x * 0.1;
+            const breathe = moving ? 1 + 0.04 * Math.sin(time * 0.9) : 1;
+            const power = breathe + surge * 0.5;
+
+            ctx.clearRect(0, 0, size, size);
+            ctx.globalCompositeOperation = 'lighter';
+
+            // Halo of scattered light
+            glow(cx, cy, R * 0.95 * power, [
+                [0, 'rgba(130,150,255,0.20)'],
+                [0.3, 'rgba(110,120,255,0.07)'],
+                [1, 'rgba(110,120,255,0)'],
+            ]);
+
+            drawParticles(R, cx, cy, incl, roll, false, moving);
+            drawJets(R, cx, cy, incl, roll, moving);
+
+            // The star
+            glow(cx, cy, R * 0.3 * power, [
+                [0, 'rgba(255,255,255,1)'],
+                [0.12, 'rgba(255,244,226,0.95)'],
+                [0.3, 'rgba(255,205,150,0.4)'],
+                [0.6, 'rgba(160,150,255,0.12)'],
+                [1, 'rgba(120,130,255,0)'],
+            ]);
+
+            drawParticles(R, cx, cy, incl, roll, true, moving);
+            drawWaves(R, cx, cy, incl, roll, now);
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function frame(now) {
+            rafId = requestAnimationFrame(frame);
+            const dt = Math.min((now - (last || now)) / 1000, 1 / 20);
+            last = now;
+            time += dt;
+            surge = Math.max(0, surge - dt * 0.9);
+            tilt.vx += ((tilt.tx - tilt.x) * 30 - tilt.vx * 9) * dt;
+            tilt.vy += ((tilt.ty - tilt.y) * 30 - tilt.vy * 9) * dt;
+            tilt.x += tilt.vx * dt;
+            tilt.y += tilt.vy * dt;
+            draw(now);
+        }
+
+        function start() {
+            if (running || !motionAllowed() || document.hidden || !visible) return;
+            running = true;
+            last = 0;
+            rafId = requestAnimationFrame(frame);
+        }
+
+        function stop() {
+            running = false;
+            cancelAnimationFrame(rafId);
+        }
+
+        function pulse() {
+            if (!motionAllowed()) return;
+            waves.push({ born: performance.now() });
+            surge = 1;
+        }
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resize, 120);
+        });
+        document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+        if (reducedMotionQuery.addEventListener) {
+            reducedMotionQuery.addEventListener('change', () => {
+                if (motionAllowed()) start(); else { stop(); draw(performance.now()); }
+            });
+        }
+        // Only burn frames while the hero is on screen
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver((entries) => {
+                visible = entries[0].isIntersecting;
+                if (visible) start(); else stop();
+            }).observe(canvas);
+        }
+        if (finePointer) {
+            window.addEventListener('pointermove', (e) => {
+                tilt.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+                tilt.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+            }, { passive: true });
+        }
+        canvas.addEventListener('click', pulse);
+
+        resize();
+        start();
+
+        return { pulse: pulse };
+    }
+
+    // ==========================================================================
+    // Enigmas: the footer is Morse. Decode it and type it, or press it.
+    // ==========================================================================
+
+    function initEnigmas(starfield, galaxy) {
+        const SECRET = 'warp';
+        let typed = '';
+
+        function jump() {
+            if (starfield) starfield.warp(1300);
+            if (galaxy) galaxy.pulse();
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
+            const target = e.target;
+            if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+            typed = (typed + e.key.toLowerCase()).slice(-SECRET.length);
+            if (typed === SECRET) {
+                typed = '';
+                jump();
+            }
+        });
+
+        const cipher = document.getElementById('cipher');
+        if (cipher) cipher.addEventListener('click', jump);
     }
 
     // ==========================================================================
@@ -451,7 +763,7 @@
         );
 
         console.log(
-            '%c✦ Hey, fellow traveler. Curious about the code? Check out the repo → github.com/luisecab',
+            '%c✦ Hey, fellow traveler. There are a few signals hidden on this page. The footer speaks in dots and dashes: decode it, then type it. And the star in the hero does not like being poked.\n  Curious about the code? → github.com/luisecab',
             'color: #a4a9be; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;'
         );
     }
@@ -580,7 +892,9 @@
 
     function init() {
         const starfield = createStarfield(document.getElementById('starfield'));
+        const galaxy = createGalaxy(document.getElementById('galaxy'));
         runIntro(starfield, initReveal);
+        initEnigmas(starfield, galaxy);
         initSpotlight();
         printConsoleEasterEgg();
         initSupabase();
