@@ -600,8 +600,8 @@
     // ==========================================================================
 
     const greetings = ['Hola', 'Hello', 'Cześć', 'Salut', 'Ciao'];
-    const GREETING_MS = 1200;  // time each greeting stays on screen
-    const SWAP_MS = 260;       // exit of one greeting before the next enters
+    const GREETING_MS = 600;   // time each greeting stays on screen (original v1 timing)
+    const SWAP_MS = 400;       // exit of one greeting before the next enters
 
     function runIntro(starfield, onReveal) {
         const root = document.documentElement;
